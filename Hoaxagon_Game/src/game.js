@@ -1,0 +1,24 @@
+import MainMenu from "./scenes/mainMenu.js";
+let config = {
+    type: Phaser.AUTO,
+    width:  1320,
+    height: 720,
+    pixelArt: true,
+    scale: {
+        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
+    },
+
+    scene: [MainMenu],    // Decimos a Phaser cual es nuestra escena
+
+    physics: { 
+        default: 'arcade', 
+        arcade: { 
+            gravity: { y: 0 }, 
+            debug: false
+        } 
+    },
+    parent:"game"
+
+};
+
+new Phaser.Game(config);
