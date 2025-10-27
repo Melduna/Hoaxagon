@@ -1,4 +1,4 @@
-
+import { WordBlock } from '../post_system/wordBlock.js'
 
 export default class TestScene extends Phaser.Scene {
 	/**
@@ -7,13 +7,16 @@ export default class TestScene extends Phaser.Scene {
 	 */
 	constructor() {
 		//super(SceneKeys.TestScene);
+        super("dfg");
 	}
 
 	/**
 	* Creación de los elementos de la escena principal de juego
 	*/
 	create() {
-        
+
+		let wordBlock = new WordBlock(this, 0, 200, 200, "palabra", 'Arial', 40);
+		
 	}
 
 	update(time, dt) {

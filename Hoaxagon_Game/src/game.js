@@ -1,4 +1,6 @@
 import MainMenu from "./scenes/mainMenu.js";
+import TestScene from "./scenes/testScene.js";
+
 let config = {
     type: Phaser.AUTO,
     width:  1320,
@@ -8,7 +10,7 @@ let config = {
         autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
     },
 
-    scene: [MainMenu],    // Decimos a Phaser cual es nuestra escena
+    scene: [TestScene, MainMenu],    // Decimos a Phaser cual es nuestra escena
 
     physics: { 
         default: 'arcade', 
