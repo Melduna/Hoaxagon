@@ -18,9 +18,10 @@ export default class TestScene extends Phaser.Scene {
 
 		//let wordBlock = new WordBlock(this, 200, 200, "palabra", 0, 'Arial', 40);
 		let wordContainer = new WordBlockContainer(this, 200, 200, 'Arial', 20, 200);
-		for(let i = 0; i < 20; i++){
+		/*for(let i = 0; i < 20; i++){
 			wordContainer.buildAndAddWord("word", 0);
-		}
+			//wordContainer.buildAndAddWord("💡", 0);
+		}*/
 	}
 
 	update(time, dt) {

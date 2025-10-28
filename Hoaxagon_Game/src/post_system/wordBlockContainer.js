@@ -93,9 +93,8 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
 
     /**
      * 
-     * @param {String} wordString 
-     * @param {number} sentenceID 
-     * @returns 
+     * @param {String} wordString
+     * @param {number} sentenceID
      */
     buildAndAddWord(wordString, sentenceID) {     
         const WORD_SIZE = this.getSizeOfText(wordString);
@@ -104,6 +103,7 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
 
         let leftoverWordPart = "";
 
+        // Handling where and how the WordBlock is positioned
         if(WORD_SIZE.width <= this.lineMaxWidth) {
             // The word only fits entirely in the next line
             if(this._currentLineWidth + WORD_SIZE.width > this.lineMaxWidth) {
@@ -129,6 +129,7 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
             }  
         }
 
+        // Creting the WordBlock
         const posX = this._currentLineWidth;
         const posY = this._currentLineIndex * (LINE_HEIGHT + this.lineSpacing);
 
@@ -136,11 +137,12 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
         this.add(wordBlock);
         this.wordList.push(wordBlock);
 
+        // Updating the used width in the line
         this._currentLineWidth += this.getSizeOfText(wordString).width;
          
         // Repeat process with the rest of the word if needed
         if(leftoverWordPart != "")
-            this.buildAndAddWord(restOfWord, sentenceID);
+            this.buildAndAddWord(leftoverWordPart, sentenceID);
     }
 
     displayBounds() {
