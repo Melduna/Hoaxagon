@@ -1,7 +1,7 @@
 export class WordBlock extends Phaser.GameObjects.Text {
     
     /**
-     * Id of the sentence that contains the word
+     * Id of the sentence that contains the word.
      * @type {number}
      */
     sentenceID = 0;
@@ -16,7 +16,7 @@ export class WordBlock extends Phaser.GameObjects.Text {
      * @param {String} _fontFamily 
      * @param {number} _fontSize 
      */
-    constructor(scene, sentenceID, positionX, positionY, text, _fontFamily, _fontSize) {
+    constructor(scene, positionX, positionY, text, sentenceID, _fontFamily, _fontSize) {
         super(scene, positionX, positionY, text, {
             fontFamily: _fontFamily, 
             fontSize: _fontSize,
@@ -30,8 +30,6 @@ export class WordBlock extends Phaser.GameObjects.Text {
         this.on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
             this.setBackgroundColor('#c3c327ff');
         });
-
-        console.log("created");
     }
 
     

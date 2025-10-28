@@ -15,7 +15,7 @@ export default class TestScene extends Phaser.Scene {
 	*/
 	create() {
 
-		let wordBlock = new WordBlock(this, 0, 200, 200, "palabra", 'Arial', 40);
+		let wordBlock = new WordBlock(this, 200, 200, "palabra", 0, 'Arial', 40);
 		
 	}
 
