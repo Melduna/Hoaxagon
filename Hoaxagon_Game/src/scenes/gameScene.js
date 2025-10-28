@@ -24,7 +24,9 @@ export default class GameScene extends Phaser.Scene{
 
         //#region input
         //#region gameplay
-
+        if (Phaser.Input.Keyboard.JustDown(this.KEYS.PAUSE)){
+            this.pauseGame();
+        }
         //#endregion
         //#region debug
         if (Phaser.Input.Keyboard.JustDown(this.KEYS.TIMEUP)){
@@ -48,6 +50,10 @@ export default class GameScene extends Phaser.Scene{
      */
     addTime(time){
         this.time += (time*1000);
+    }
+    pauseGame(){
+        this.scene.launch("pauseScene");
+        this.scene.pause()
     }
 
 }
