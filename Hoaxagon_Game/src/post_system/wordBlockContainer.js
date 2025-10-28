@@ -1,3 +1,5 @@
+import { WordBlock } from './wordBlock.js'
+
 /**
  * Container that keeps a list of `WordBlock` that form part of a sencence (the words contain
  * the same `sentenceID` value) in order to form a text box with a fixed width.
@@ -12,9 +14,9 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
 
     /**
      * Array of `WordBlock` objects.
-     * @type {number}
+     * @type {Array(WordBlock)}
      */
-    wordList = Array();
+    wordList = new Array();
 
     /**
      * @type {String}
@@ -50,10 +52,14 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
      * @param {number} positionX 
      * @param {number} positionY 
      */
-    constructor(scene, positionX, positionY, lineMaxWidth) {
+    constructor(scene, positionX, positionY, textFontFamily, textFontSize, lineMaxWidth) {
         super(scene, positionX, positionY);
         
         this.lineMaxWidth = lineMaxWidth;
+        this.textFontSize = textFontSize;
+        this.textFontFamily = textFontFamily;
+
+        scene.add.existing(this);
     }
 
     /**
@@ -73,7 +79,16 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
             fontSize: this.textFontSize
         };
 
-        return Phaser.GameObjects.Text.MeasureText(styleConfig, str, false); // word wrap = false
+        const tempText = new Phaser.GameObjects.Text(this.scene, 0, 0, str, styleConfig);
+
+        const metrics = {
+            width: tempText.width,
+            height: tempText.height
+        };
+
+        tempText.destroy(); 
+
+        return metrics;
     }
 
     /**
@@ -82,10 +97,12 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
      * @param {number} sentenceID 
      * @returns 
      */
-    buildAndAddWord(wordString, sentenceID) {        
+    buildAndAddWord(wordString, sentenceID) {     
         const WORD_SIZE = this.getSizeOfText(wordString);
 
         const LINE_HEIGHT = this.getSizeOfText('A').height;
+
+        let leftoverWordPart = "";
 
         if(WORD_SIZE.width <= this.lineMaxWidth) {
             // The word only fits entirely in the next line
@@ -93,32 +110,42 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
                 this._currentLineIndex++;
                 this._currentLineWidth = 0;
             }
+        }
+        else { // The word needs to ocupy more than one single line
+            this._currentLineIndex++;
+            this._currentLineWidth = 0;
 
-            const posX = this._currentLineWidth;
-            const posY = this._currentLineIndex * (LINE_HEIGHT + this.lineSpacing);
+            let i = 0;
+            let w = this.getSizeOfText(wordString[0]).width; 
 
-            const wordBlock = new WordBlock(this.scene, posX, posY, wordString, sentenceID, this.textFontFamily, this.textFontSize);
-            this.add(wordBlock);
-            this.wordList.push(wordBlock);
+            while(i < wordString.length && w <= this.lineMaxWidth) {
+                w += this.getSizeOfText(wordString[i]).width;
+                i++;
+            }
 
-            return;
+            if(i < wordString.length) { // The whole word didn't fit -> word divission
+                leftoverWordPart = wordString.slice(i);
+                wordString = wordString.slice(0, i);
+            }  
         }
 
-        // The word ocupies more than one line
-        this._currentLineIndex++;
-        this._currentLineWidth = 0;
+        const posX = this._currentLineWidth;
+        const posY = this._currentLineIndex * (LINE_HEIGHT + this.lineSpacing);
 
-        let i = 0;
-        let w = 0; 
-        while(i < wordString.length-1 && w + this.getSizeOfText(wordString[i+1]).width) i++;
+        const wordBlock = new WordBlock(this.scene, posX, posY, wordString, sentenceID, this.textFontFamily, this.textFontSize);
+        this.add(wordBlock);
+        this.wordList.push(wordBlock);
 
-        const wordToWrite = wordString.slice(0, );
+        this._currentLineWidth += this.getSizeOfText(wordString).width;
+         
+        // Repeat process with the rest of the word if needed
+        if(leftoverWordPart != "")
+            this.buildAndAddWord(restOfWord, sentenceID);
     }
 
     displayBounds() {
-
-        this.scene.graphics.clear();
+      /*  this.scene.graphics.clear();
         this.scene.graphics.lineStyle(1, 0xffff00);
-        this.scene.graphics.strokeRectShape(this.getBounds());
+        this.scene.graphics.strokeRectShape(this.getBounds());*/
     }
 }
