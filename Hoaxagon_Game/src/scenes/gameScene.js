@@ -19,7 +19,7 @@ export default class GameScene extends Phaser.Scene{
         //#region timer
         this.time = Math.max(0,this.time-=dt);
         let TD = this.getTime();
-        this.timeDisplay.text = (TD[0]+":"+TD[1]);
+        this.timeDisplay.text = (TD[0]+":"+Math.floor(TD[1]/10)+TD[1]%10);
         //#endregion
 
         //#region input
