@@ -12,7 +12,7 @@ export default class GameScene extends Phaser.Scene{
     }
     create() {
         this.time = 180000;
-        this.timeDisplay = this.add.text(0,0,"timetest",{ fontFamily: 'Arial', color: 'rgba(255, 255, 255, 1)', fontSize: '72px'});
+        this.timeDisplay = this.add.text(0,0,"timetest",{ fontFamily: 'Horizon', color: 'rgba(255, 255, 255, 1)', fontSize: '72px'});
         this.KEYS = this.input.keyboard.addKeys(KEYBINDS);
     }
     update(time, dt) {

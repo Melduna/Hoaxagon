@@ -17,8 +17,8 @@ export default class PauseScene extends Phaser.Scene{
         this.SCREENY = height;
         console.log(this.SCREENX);
         console.log(this.SCREENY);
-                this.add.text(this.SCREENX/2-150,this.SCREENY/2-50,"PAUSED",
-            { fontFamily: 'Arial', 
+                this.add.text(this.SCREENX/2-215,this.SCREENY/2-50,"PAUSED",
+            { fontFamily: 'Horizon', 
                 color: 'rgba(255, 255, 255, 1)', 
                 fontSize: this.textsize+'px'});
         this.KEYS = this.input.keyboard.addKeys(KEYBINDS);
