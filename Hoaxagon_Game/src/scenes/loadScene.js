@@ -15,6 +15,13 @@ export default class LoadScene extends Phaser.Scene {
      * Cargamos todos los assets que vamos a necesitar
      */
     preload() {
+        const progress = this.add.graphics();
+        this.load.on("progress",(value)=>{
+
+        })
+        this.load.on("complete",()=>{
+            this.scene.start("mainMenu");
+        })
 
             //* Music
             // this.load.audio(SoundKeys.Ambiance, 'assets/music/scify-theme.mp3')

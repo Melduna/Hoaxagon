@@ -1,0 +1,26 @@
+export const TEXT_CONFIG = {
+    Title:{
+        fontSize:"132px",
+        fontFamily:"Horizon"
+    },
+    Heading:{
+        fontSize:"72px",
+        fontFamily:"Horizon"
+    },
+    SubHeading:{
+        fontSize:"32px",
+        fontFamily:"Horizon"
+    },
+    Paragraph:{
+        fontSize:"32px",
+        fontFamily:"Oswald-Medium"
+    },
+    ParagraphBold:{
+        fontSize:"32px",
+        fontFamily:"Oswald-Bold"
+    },
+    ParagraphLight:{
+        fontSize:"32px",
+        fontFamily:"Oswald-Light"
+    },
+}
