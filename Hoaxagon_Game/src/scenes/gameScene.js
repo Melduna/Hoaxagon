@@ -1,11 +1,13 @@
 import {KEYBINDS} from "../utils/Keybinds.js";
+import { IMAGE_KEYS, SCENE_KEYS } from '../utils/CommonKeys.js'
+
 export default class GameScene extends Phaser.Scene{
     time;
     timeDisplay;
     KEYS;
     pause = false;
     constructor(){
-        super({key: "gameScene"});
+        super(SCENE_KEYS.GAME_SCENE);
     }
     init(){
 

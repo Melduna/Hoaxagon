@@ -25,6 +25,7 @@ export class WordBlock extends Phaser.GameObjects.Text {
         super(scene, positionX, positionY, text, {
             fontFamily: _fontFamily, 
             fontSize: _fontSize,
+            color: '#000000'
         });
 
         this.sentenceID = sentenceID;
@@ -39,7 +40,7 @@ export class WordBlock extends Phaser.GameObjects.Text {
      */
     setSelectionState(value) {
         this.isSelected = value;
-
+        
         if(this.isSelected)
             this.setBackgroundColor('#c3c327ff');
         else

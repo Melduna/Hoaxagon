@@ -1,4 +1,4 @@
-//import { SceneKeys } from '../../assets/srcKeys.js'
+import { IMAGE_KEYS, SCENE_KEYS } from '../utils/CommonKeys.js'
 
 
 export default class LoadScene extends Phaser.Scene {
@@ -8,7 +8,7 @@ export default class LoadScene extends Phaser.Scene {
      */
     constructor() {
         //super(SceneKeys.Load);
-        super();
+        super(SCENE_KEYS.LOAD_SCENE);
     }
 
     /**
@@ -21,13 +21,14 @@ export default class LoadScene extends Phaser.Scene {
 
             // Main Menu
             // this.load.image(TextureKeys.Health, 'assets/item/health.png');
+        this.load.image(IMAGE_KEYS.TEMP_POST_CONTAINER, '../../assets/images/temp_post_container.png');
     }
 
     /**
     * Creación de los elementos de la escena principal de juego
     */
     create() {
-        // this.scene.start(SceneKeys.MainMenu);
+        this.scene.start(SCENE_KEYS.TEST_SCENE);
     }
     
     /*

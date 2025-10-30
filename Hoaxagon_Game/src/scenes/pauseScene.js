@@ -1,9 +1,10 @@
 import { KEYBINDS } from "../utils/Keybinds.js";
+import { IMAGE_KEYS, SCENE_KEYS } from '../utils/CommonKeys.js'
 //import SIZES from "../utils/Sizes.js";
 export default class PauseScene extends Phaser.Scene{
     textsize = 72;
     constructor(){
-        super({key: "pauseScene"});
+        super(SCENE_KEYS.PAUSE_SCENE);
     }
     preload() {
         

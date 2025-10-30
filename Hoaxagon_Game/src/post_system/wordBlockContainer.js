@@ -89,7 +89,7 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
         // Define the style of the text that we are considering 
         const styleConfig = {
             fontFamily: this.textFontFamily,
-            fontSize: this.textFontSize
+            fontSize: this.textFontSize,
         };
 
         const tempText = new Phaser.GameObjects.Text(this.scene, 0, 0, str, styleConfig);
