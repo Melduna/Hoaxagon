@@ -2,7 +2,7 @@ import MainMenu from "./scenes/mainMenu.js";
 import TestScene from "./scenes/testScene.js";
 import GameScene from "./scenes/gameScene.js";
 import PauseScene from "./scenes/pauseScene.js";
-import LoadScene from './scenes/loadScene.js';
+import LoadScene from "./scenes/loadScene.js";
 
 let config = {
     type: Phaser.AUTO,

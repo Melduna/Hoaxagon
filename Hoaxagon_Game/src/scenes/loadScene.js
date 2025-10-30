@@ -1,5 +1,8 @@
 import { IMAGE_KEYS, SCENE_KEYS } from '../utils/CommonKeys.js'
 
+//import { SceneKeys } from '../../assets/srcKeys.js'
+import { PALETTE_HEX } from "../utils/Palette.js";
+import { PALETTE_RGBA } from "../utils/Palette.js";
 
 export default class LoadScene extends Phaser.Scene {
     /**
@@ -15,6 +18,17 @@ export default class LoadScene extends Phaser.Scene {
      * Cargamos todos los assets que vamos a necesitar
      */
     preload() {
+        let { width, height } = this.sys.game.canvas;
+        const progress = this.add.graphics();
+        this.load.on("progress",(value)=>{
+                progress.clear();
+                progress.fillStyle();
+                progress.fillRect(0, height-100, 400 * width, 50);
+        })
+        this.load.on("complete",()=>{
+            console.log("LoaderOut");
+            this.scene.start("mainMenu");
+        })
 
             //* Music
             // this.load.audio(SoundKeys.Ambiance, 'assets/music/scify-theme.mp3')
