@@ -17,6 +17,7 @@ export default class MainMenu extends Phaser.Scene{
     }
     create(){
         let { width, height } = this.sys.game.canvas;
+        this.add.text(width/2,100,"HOAXAGON",TEXT_CONFIG.Title).setTint(0xffffff).setOrigin(0.5,0.5)
         this.playButton = new Button({scene:this,
             x: width/2, y: height/2,
             width: 300, height:300,
