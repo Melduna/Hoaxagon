@@ -1,11 +1,13 @@
 import {KEYBINDS} from "../utils/Keybinds.js";
+import { PALETTE_HEX } from "../utils/Palette.js";
+import { PALETTE_RGBA } from "../utils/Palette.js";
 export default class GameScene extends Phaser.Scene{
     //TODO: Progresión de niveles
     //TODO: Variante para modo entrenamiento y arcade
     //TODO: Implementación de modo inspección, mensajes, barra de información.
     timer;
     timeDisplay;
-    KEYS;
+    KEYS;   
     pause = false;
     constructor(){
         super({key: "gameScene"});
@@ -14,8 +16,9 @@ export default class GameScene extends Phaser.Scene{
 
     }
     create() {
+        this.cameras.main.setBackgroundColor( PALETTE_HEX.DarkerGrey);
         this.timer = 180000;
-        this.timeDisplay = this.add.text(10,0,"",{ fontFamily: 'Horizon', color: 'rgba(255, 255, 255, 1)', fontSize: '72px'});
+        this.timeDisplay = this.add.text(10,0,"",{ fontFamily: 'Horizon', color: PALETTE_RGBA.White, fontSize: '72px'});
         this.KEYS = this.input.keyboard.addKeys(KEYBINDS);
     }
     update(time, dt) {
@@ -64,11 +67,11 @@ export default class GameScene extends Phaser.Scene{
     updateTimer(){
         let TD = this.getTime();
         this.timeDisplay.text = (TD[0]+":"+Math.floor(TD[1]/10)+TD[1]%10);
-        if (this.timer<11000) this.timeDisplay.setColor('rgba(149, 41, 41, 1)');
-        else if (this.timer<31000) this.timeDisplay.setColor('rgba(212, 125, 59, 1)');
-        else if (this.timer<61000) this.timeDisplay.setColor('rgba(211, 172, 31, 1)');
-        else if (this.timer<181000) this.timeDisplay.setColor('rgba(255, 255, 255, 1)');
-        else this.timeDisplay.setColor('rgba(83, 208, 143, 1)');
+        if (this.timer<11000) this.timeDisplay.setTint( PALETTE_HEX.RedAlert);
+        else if (this.timer<31000) this.timeDisplay.setTint( PALETTE_HEX.AmberAlert);
+        else if (this.timer<61000) this.timeDisplay.setTint( PALETTE_HEX.YellowAlert);
+        else if (this.timer<181000) this.timeDisplay.setTint( PALETTE_HEX.White);
+        else this.timeDisplay.setTint( PALETTE_HEX.Teal);
     }
 
 }

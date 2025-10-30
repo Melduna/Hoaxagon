@@ -1,3 +1,5 @@
+import { PALETTE_HEX } from "../utils/Palette.js";
+import { PALETTE_RGBA } from "../utils/Palette.js";
 export default class Button extends Phaser.GameObjects.Rectangle{
     /**
      * 

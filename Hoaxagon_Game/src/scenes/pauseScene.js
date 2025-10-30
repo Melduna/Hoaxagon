@@ -1,5 +1,7 @@
 import { KEYBINDS } from "../utils/Keybinds.js";
 import { TEXT_CONFIG } from "../utils/textConfigs.js";
+import { PALETTE_HEX } from "../utils/Palette.js";
+import { PALETTE_RGBA } from "../utils/Palette.js";
 import Button from "../utils/button.js";
 //import SIZES from "../utils/Sizes.js";
 export default class PauseScene extends Phaser.Scene{
@@ -20,16 +22,16 @@ export default class PauseScene extends Phaser.Scene{
         this.SCREENY = height;
         console.log(this.SCREENX);
         console.log(this.SCREENY);
-                this.add.text(this.SCREENX/2-215,this.SCREENY/2-50,"PAUSED",TEXT_CONFIG.Heading).setTint(0xffffff);
+                this.add.text(this.SCREENX/2-215,this.SCREENY/2-50,"PAUSED",TEXT_CONFIG.Heading).setTint(PALETTE_HEX.White);
         this.KEYS = this.input.keyboard.addKeys(KEYBINDS);
         this.exitbutton = new Button({scene:this,
             x:this.SCREENX/2,y:this.SCREENY/2+50,
             width:200,height:40,
-            color:0xffffff,
+            color:PALETTE_HEX.White,
             clickCallback:this.quitToMenu,
             text:"QUIT",
             textConfig: TEXT_CONFIG.SubHeading,
-            textColor: 0x000000});
+            textColor: PALETTE_HEX.DarkerGrey});
     }
     update(time, dt) {
         //#region input

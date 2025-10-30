@@ -1,5 +1,6 @@
 //import { SceneKeys } from '../../assets/srcKeys.js'
-
+import { PALETTE_HEX } from "../utils/Palette.js";
+import { PALETTE_RGBA } from "../utils/Palette.js";
 
 export default class LoadScene extends Phaser.Scene {
     /**
@@ -19,7 +20,7 @@ export default class LoadScene extends Phaser.Scene {
         const progress = this.add.graphics();
         this.load.on("progress",(value)=>{
                 progress.clear();
-                progress.fillStyle('rgba(160, 160, 160, 1)');
+                progress.fillStyle();
                 progress.fillRect(0, height-100, 400 * width, 50);
         })
         this.load.on("complete",()=>{
