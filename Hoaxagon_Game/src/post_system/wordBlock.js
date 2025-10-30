@@ -7,6 +7,11 @@ export class WordBlock extends Phaser.GameObjects.Text {
     sentenceID = 0;
 
     /**
+     * @type {boolean}
+     */
+    isSelected = false;
+
+    /**
      * 
      * @param {Phaser.Scene} scene 
      * @param {number} sentenceID
@@ -26,12 +31,18 @@ export class WordBlock extends Phaser.GameObjects.Text {
         scene.add.existing(this);
 
         this.setInteractive();
-
-        this.on(Phaser.Input.Events.GAMEOBJECT_POINTER_DOWN, () => {
-            this.setBackgroundColor('#c3c327ff');
-            console.log(this.sentenceID);
-        });
     }
 
-    
+    /**
+     * Sets the WordBlock as selected or not, if the object is selected it gets highlighted.
+     * @param {boolean} value 
+     */
+    setSelectionState(value) {
+        this.isSelected = value;
+
+        if(this.isSelected)
+            this.setBackgroundColor('#c3c327ff');
+        else
+            this.setBackgroundColor('#00000000');
+    }
 }

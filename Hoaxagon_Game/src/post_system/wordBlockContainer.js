@@ -32,6 +32,13 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
      * @type {number}
      */
     lineMaxWidth;
+
+    /**
+     * Whether the contined WordBlocks can bee selected and highlighted or not.
+     * It depends on the state of inspector mode.
+     * @type {boolean}
+     */
+    wordBlockSelectionEnabled = true;
     
     /**
      * In which line is the container currently adding `WordBlock` objects.
@@ -60,6 +67,12 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
         this.textFontFamily = textFontFamily;
 
         scene.add.existing(this);
+
+        
+        scene.input.on(Phaser.Input.Events.POINTER_DOWN, (pointer, game_objects) => {
+		 	game_objects.forEach((game_object) => this.handleWordBlockSelection(game_object));
+		});
+        
     }
 
     /**
@@ -160,7 +173,7 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
         const spaceTypes = ['\n', '\t', ' '];
 
         let lastChar = "";
-        let emptySentence = true;
+        let emptySentence = true; 
 
         for(let i = 0; i < text.length; i++) {
 
@@ -186,7 +199,7 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
             else if(separatorTypes.includes(text[i])) {
                 currentBuiltWord += text[i];
                 this.buildAndAddWord(currentBuiltWord, currentSentenceID);
-                
+
                 currentBuiltWord = "";
                 currentSentenceID++;
                 emptySentence = true; // After a point can come a ¿ or ¡, what creates anoder index unnecessarily
@@ -219,5 +232,18 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
         if(currentBuiltWord != "") { // Register the last part of the text
             this.buildAndAddWord(currentBuiltWord, currentSentenceID);
         }
+    }
+
+    /**
+     * Gets a sentence highlighted if the user clicks on one `WordBlock` that forms part of the
+     * sentence.
+     * @param {Phaser.GameObjects} clickedObject 
+     */
+    handleWordBlockSelection(clickedObject) {
+        if(!(clickedObject instanceof WordBlock)) return;
+
+        this.wordList.forEach((wordBlock) => {
+            wordBlock.setSelectionState(wordBlock.sentenceID == clickedObject.sentenceID);
+        });
     }
 }
