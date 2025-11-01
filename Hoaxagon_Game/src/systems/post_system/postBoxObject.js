@@ -1,4 +1,4 @@
-import { IMAGE_KEYS } from '../utils/CommonKeys.js'
+import { IMAGE_KEYS } from '../../utils/CommonKeys.js'
 import { WordBlockContainer } from './wordBlockContainer.js'
 
 const NINE_SLICE_DIMENSIONS = {
@@ -28,11 +28,11 @@ export class PostBoxObject extends Phaser.GameObjects.Container {
      * 
      * @param {Phaser.Scene} scene 
      * @param {number} positionX 
-     * @param {number} positionY 
+     * @param {number} positionY
+     * @param {String} text  
      * @param {number} width 
-     * @param {number} height 
      */
-    constructor(scene, positionX, positionY, width) {
+    constructor(scene, positionX, positionY, text, width) {
         super(scene, positionX, positionY);
 
         scene.add.existing(this);
@@ -44,6 +44,7 @@ export class PostBoxObject extends Phaser.GameObjects.Container {
             NINE_SLICE_DIMENSIONS.LEFT_WIDTH, NINE_SLICE_DIMENSIONS.RIGHT_WIDTH, 
             NINE_SLICE_DIMENSIONS.TOP_WIDTH, NINE_SLICE_DIMENSIONS.BOTTOM_WIDTH
         );
+
         this.boxNineSlice.setOrigin(0, 0);
 
         let wordBlockContainer = new WordBlockContainer(
@@ -54,10 +55,6 @@ export class PostBoxObject extends Phaser.GameObjects.Container {
             width - REALATIVE_POSITIONS.WORD_BLOCK_CONTAINER_X * 2
         );
 
-        /*const text = "Esto es un texto de sección 0, esto de la 1. ¿Y esto de la 2?\n"
-			+ "Esto de la 3, la 4 💡 ¡¡¡La 5 (incluido esto)!!!";*/
-        const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
-
 		wordBlockContainer.buidText(text);
 
         this.add(this.boxNineSlice)
@@ -66,7 +63,6 @@ export class PostBoxObject extends Phaser.GameObjects.Container {
         const height = NINE_SLICE_DIMENSIONS.BOTTOM_WIDTH + NINE_SLICE_DIMENSIONS.TOP_WIDTH 
             + REALATIVE_POSITIONS.WORD_BLOCK_CONTAINER_X*2 + wordBlockContainer.getBounds().height;
         
-        //this.setSize(width, height);
         this.boxNineSlice.setSize(width, height);
     }
 }

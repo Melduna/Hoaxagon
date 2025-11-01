@@ -1,7 +1,5 @@
 import { IMAGE_KEYS, SCENE_KEYS } from '../utils/CommonKeys.js'
-import { WordBlock } from '../post_system/wordBlock.js'
-import { WordBlockContainer } from '../post_system/wordBlockContainer.js'
-import { PostBoxObject } from '../post_system/postBoxObject.js'
+import { PostBoxObject } from '../systems/post_system/postBoxObject.js'
 
 export default class TestScene extends Phaser.Scene {
 	/**
@@ -18,19 +16,10 @@ export default class TestScene extends Phaser.Scene {
 	*/
 	create() {
 
-		//let wordBlock = new WordBlock(this, 200, 200, "palabra", 0, 'Arial', 40);
-		let wordContainer = new WordBlockContainer(this, 200, 200, 'Arial', 20, 200);
-		/*for(let i = 0; i < 20; i++){
-			wordContainer.buildAndAddWord("word", 0);
-			//wordContainer.buildAndAddWord("💡", 0);
-		}*/
-		//wordContainer.buildAndAddWord("wo rd", 0);
 		const text = "Esto es un texto de sección 0, esto de la 1. ¿Y esto de la 2?\n"
 			+ "Esto de la 3, la 4 💡 ¡¡¡La 5 (incluido esto)!!!";
 
-			//wordContainer.buidText(text);
-
-		let post = new PostBoxObject(this, 200, 200, 400);
+		let post = new PostBoxObject(this, 200, 200, text, 400);
 	}
 
 	update(time, dt) {

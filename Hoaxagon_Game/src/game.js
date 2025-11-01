@@ -8,10 +8,22 @@ let config = {
     type: Phaser.AUTO,
     width:  1320,
     height: 720,
-    pixelArt: true,
+    pixelArt: false,
     scale: {
-        autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
-    },
+		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY,
+
+		mode: Phaser.Scale.FIT,
+		min: {
+			width: 640,
+			height: 300
+		},
+		max: {
+			width:  1320,
+            height: 720
+		},
+		zoom: 1
+
+	},
 
     scene: [LoadScene, GameScene, MainMenu, PauseScene, TestScene],    // Decimos a Phaser cual es nuestra escena
 
