@@ -1,29 +1,28 @@
 import { PALETTE_HEX, PALETTE_RGBA } from "./Palette.js";
 import { TEXT_CONFIG } from "./textConfigs.js";
-export default class infoBox extends Phaser.GameObjects.Container{
+export default class InfoBox extends Phaser.GameObjects.Container{
     /**
      * 
      * @param {*} config {scene,
             x, y,
             width, height,
-            color,
+            title,
+            description,
             clickCallback?,
             hoverInCallback?,
-            hoverOutCallback?,
-            text?,
-            textConfig?,
-            textColor?}
+            hoverOutCallback?}
      */
     constructor(config){
         super(config.scene,config.x,config.y);
         this.setSize(config.width,config.height);
         this.scene.add.existing(this);
-        this.add(this.scene.add.rectangle(0,0,config.width,config.height,config.color,1));
+        this.add(this.scene.add.rectangle(0,0,config.width,config.height,PALETTE_HEX.White,1));
         this.setInteractive();
+        this.add(this.scene.add.text(-this.width/2+10,-this.height/2,config.title,TEXT_CONFIG.SubHeading).setTint(PALETTE_HEX.DarkerGrey).setOrigin(0.0));
+        this.add(this.scene.add.text(-this.width/2+10,-this.height/2+36,config.description,TEXT_CONFIG.Paragraph).setTint(PALETTE_HEX.DarkerGrey).setOrigin(0.0));
         if (config.clickCallback) this.on("pointerdown",config.clickCallback,this.scene);
         if (config.hoverInCallback) this.on("pointerover",config.hoverInCallback,this.scene);
         if (config.hoverOutCallback) this.on("pointerout",config.hoverInCallback,this.scene);
-        if (config.title) this.add.text(0,0,config.text,TEXT_CONFIG.SubHeading).setTint(config.textColor).setOrigin(0.0);
-        
     }
+    //TODO: Expanded info on click + Inspect mode interaction
 }

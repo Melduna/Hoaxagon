@@ -1,6 +1,7 @@
 import {KEYBINDS} from "../utils/Keybinds.js";
 import { IMAGE_KEYS, SCENE_KEYS } from '../utils/CommonKeys.js'
 import { PALETTE_HEX, PALETTE_RGBA } from "../utils/Palette.js";
+import InfoBox from "../utils/infoBox.js";
 
 export default class GameScene extends Phaser.Scene{
     //TODO: Progresión de niveles
@@ -21,6 +22,15 @@ export default class GameScene extends Phaser.Scene{
         this.timer = 180000;
         this.timeDisplay = this.add.text(10,0,"",{ fontFamily: 'Horizon', color: PALETTE_RGBA.White, fontSize: '72px'});
         this.KEYS = this.input.keyboard.addKeys(KEYBINDS);
+        // new InfoBox({
+        //     scene: this,
+        //     x: 800,
+        //     y: 500,
+        //     width: 500,
+        //     height: 160,
+        //     title:"INFO",
+        //     description: "desc"
+        // })
     }
     update(time, dt) {
         //#region timer
