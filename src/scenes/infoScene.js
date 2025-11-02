@@ -3,8 +3,6 @@ import { IMAGE_KEYS, SCENE_KEYS } from '../utils/CommonKeys.js'
 import { PALETTE_HEX,PALETTE_RGBA } from "../utils/Palette.js";
 import { TEXT_CONFIG } from "../utils/textConfigs.js";
 import InfoBox from "../utils/infoBox.js";
-import { INFO_DATABASE } from "../utils/infoDatabase.js";
-
 //import SIZES from "../utils/Sizes.js";
 export default class InfoScene extends Phaser.Scene{
     constructor(){

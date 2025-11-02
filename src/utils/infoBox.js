@@ -1,6 +1,5 @@
 import { PALETTE_HEX, PALETTE_RGBA } from "./Palette.js";
 import { TEXT_CONFIG } from "./textConfigs.js";
-import { INFO_DATABASE } from "./infoDatabase.js";
 export default class InfoBox extends Phaser.GameObjects.Container{
     entry;
     /**

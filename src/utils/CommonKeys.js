@@ -12,5 +12,6 @@ export const SCENE_KEYS = {
 };
 
 export const JSON_KEYS = {
-    POST_LIST: "POST_LIST"
+    POST_LIST: "POST_LIST",
+    INFO_DB : "INFO_DB"
 };
