@@ -21,6 +21,7 @@ export default class InfoBox extends Phaser.GameObjects.Container{
 
         this.setSize(config.width,config.height);
         this.scene.add.existing(this);
+        this.add(this.scene.add.rectangle(10,10,config.width,config.height,PALETTE_HEX.DarkerGrey,1));
         this.add(this.scene.add.rectangle(0,0,config.width,config.height,PALETTE_HEX.White,1));
         this.setInteractive();
         this.add(this.scene.add.text(-this.width/2+5,-this.height/2+10,this.entry.name,TEXT_CONFIG.SubHeading).setColor(PALETTE_RGBA.DarkerGrey).setOrigin(0.0).setWordWrapWidth(this.width-10));

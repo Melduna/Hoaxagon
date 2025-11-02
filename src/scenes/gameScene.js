@@ -8,7 +8,6 @@ export default class GameScene extends Phaser.Scene{
     //TODO: Progresión de niveles
     //TODO: Variante para modo entrenamiento y arcade
     //TODO: Implementación de modo inspección, mensajes, barra de información.
-    KEYS;   
     
     /**
      * @type {number}
@@ -52,12 +51,13 @@ export default class GameScene extends Phaser.Scene{
     constructor(){
         super(SCENE_KEYS.GAME_SCENE);
     }
+
     init(){
 
     }
     create() {
         this.infoDatabase = this.cache.json.get(JSON_KEYS.INFO_DB);
-        this.cameras.main.setBackgroundColor( PALETTE_HEX.DarkerGrey);
+        this.cameras.main.setBackgroundColor( PALETTE_HEX.DarkGrey);
         let { width, height } = this.sys.game.canvas;
         this.timer = 180000;
         this.timeDisplay = this.add.text(10,0,"",TEXT_CONFIG.Heading).setColor(PALETTE_RGBA.White);
@@ -116,7 +116,7 @@ export default class GameScene extends Phaser.Scene{
     pauseGame(){
         this.scene.launch(SCENE_KEYS.PAUSE_SCENE);
         this.scene.pause()
-        if (this.scene.isActive(SCENE_KEYS.INFO_SCENE))this.scene.pause(SCENE_KEYS.INFO_SCENE);
+        if (this.scene.isActive(SCENE_KEYS.INFO_SCENE))this.scene.stop(SCENE_KEYS.INFO_SCENE);
     }
     updateTimer(){
         let TD = this.getTime();
