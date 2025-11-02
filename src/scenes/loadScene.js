@@ -41,7 +41,7 @@ export default class LoadScene extends Phaser.Scene {
     * Creación de los elementos de la escena principal de juego
     */
     create() {
-        this.scene.start(SCENE_KEYS.TEST_SCENE);
+        //this.scene.start(SCENE_KEYS.TEST_SCENE);
     }
     
     /*
