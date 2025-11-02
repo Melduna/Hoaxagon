@@ -1,4 +1,4 @@
-import { IMAGE_KEYS, SCENE_KEYS } from '../utils/CommonKeys.js'
+import { IMAGE_KEYS, SCENE_KEYS, JSON_KEYS } from '../utils/CommonKeys.js'
 
 //import { SceneKeys } from '../../assets/srcKeys.js'
 import { PALETTE_HEX } from "../utils/Palette.js";
@@ -36,6 +36,8 @@ export default class LoadScene extends Phaser.Scene {
             // Main Menu
             // this.load.image(TextureKeys.Health, 'assets/item/health.png');
         this.load.image(IMAGE_KEYS.TEMP_POST_CONTAINER, '../../assets/images/temp_post_container.png');
+
+        this.load.json(JSON_KEYS.POST_LIST, '../../assets/objects/postList.json');
     }
 
     /**

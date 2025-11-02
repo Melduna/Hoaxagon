@@ -9,3 +9,7 @@ export const SCENE_KEYS = {
     PAUSE_SCENE: "PAUSE_SCENE",
     MAIN_MENU_SCENE: "MAIN_MENU_SCENE",
 };
+
+export const JSON_KEYS = {
+    POST_LIST: "POST_LIST"
+};

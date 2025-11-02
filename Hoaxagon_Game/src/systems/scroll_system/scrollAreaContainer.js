@@ -53,9 +53,8 @@ export class ScrollAreaContainer extends Phaser.GameObjects.Container {
         this.setSize(width, height);
 
         scene.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
-            const scrollAmount = deltaY * 0.5; // Ajusta la velocidad
+            const scrollAmount = deltaY * 0.5;
 
-            // 1. Calcular la nueva posición Y
             let newY = this._contentAreaContainer.y - scrollAmount;
 
             let contentHeight =  this._contentAreaContainer.getBounds().height;
