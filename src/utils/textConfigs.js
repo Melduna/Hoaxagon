@@ -8,19 +8,19 @@ export const TEXT_CONFIG = {
         fontFamily:"Horizon"
     },
     SubHeading:{
-        fontSize:"32px",
+        fontSize:"24px",
         fontFamily:"Horizon"
     },
     Paragraph:{
-        fontSize:"24px",
+        fontSize:"20px",
         fontFamily:"Oswald-Medium"
     },
     ParagraphBold:{
-        fontSize:"24px",
+        fontSize:"20px",
         fontFamily:"Oswald-Bold"
     },
     ParagraphLight:{
-        fontSize:"24px",
+        fontSize:"20px",
         fontFamily:"Oswald-Light"
     },
 }
