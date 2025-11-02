@@ -24,7 +24,7 @@ export default class PauseScene extends Phaser.Scene{
         this.SCREENY = height;
         console.log(this.SCREENX);
         console.log(this.SCREENY);
-                this.add.text(this.SCREENX/2-215,this.SCREENY/2-50,"PAUSED",TEXT_CONFIG.Heading).setTint(PALETTE_HEX.White);
+                this.add.text(this.SCREENX/2-215,this.SCREENY/2-50,"PAUSED",TEXT_CONFIG.Heading).setColor(PALETTE_RGBA.White);
         this.KEYS = this.input.keyboard.addKeys(KEYBINDS);
         this.exitbutton = new Button({scene:this,
             x:this.SCREENX/2,y:this.SCREENY/2+50,
@@ -33,7 +33,7 @@ export default class PauseScene extends Phaser.Scene{
             clickCallback:this.quitToMenu,
             text:"QUIT",
             textConfig: TEXT_CONFIG.SubHeading,
-            textColor: PALETTE_HEX.DarkerGrey});
+            textColor: PALETTE_RGBA.DarkerGrey});
     }
     update(time, dt) {
         //#region input

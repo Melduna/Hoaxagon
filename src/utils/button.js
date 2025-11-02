@@ -22,6 +22,6 @@ export default class Button extends Phaser.GameObjects.Container{
         if (config.clickCallback) this.on("pointerdown",config.clickCallback,this.scene);
         if (config.hoverInCallback) this.on("pointerover",config.hoverInCallback,this.scene);
         if (config.hoverOutCallback) this.on("pointerout",config.hoverInCallback,this.scene);
-        if (config.text) this.add(this.scene.add.text(0,0,config.text,config.textConfig).setTint(config.textColor).setOrigin(0.5,0.6));
+        if (config.text) this.add(this.scene.add.text(0,0,config.text,config.textConfig).setColor(config.textColor).setOrigin(0.5,0.6));
     }
 }

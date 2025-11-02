@@ -75,11 +75,11 @@ export default class GameScene extends Phaser.Scene{
     updateTimer(){
         let TD = this.getTime();
         this.timeDisplay.text = (TD[0]+":"+Math.floor(TD[1]/10)+TD[1]%10);
-        if (this.timer<11000) this.timeDisplay.setTint( PALETTE_HEX.RedAlert);
-        else if (this.timer<31000) this.timeDisplay.setTint( PALETTE_HEX.AmberAlert);
-        else if (this.timer<61000) this.timeDisplay.setTint( PALETTE_HEX.YellowAlert);
-        else if (this.timer<181000) this.timeDisplay.setTint( PALETTE_HEX.White);
-        else this.timeDisplay.setTint( PALETTE_HEX.Teal);
+        if (this.timer<11000) this.timeDisplay.setColor(PALETTE_RGBA.RedAlert);
+        else if (this.timer<31000) this.timeDisplay.setColor(PALETTE_RGBA.AmberAlert);
+        else if (this.timer<61000) this.timeDisplay.setColor(PALETTE_RGBA.YellowAlert);
+        else if (this.timer<181000) this.timeDisplay.setColor(PALETTE_RGBA.White);
+        else this.timeDisplay.setColor(PALETTE_RGBA.Teal);
     }
     createInfoBox(posx,posy,infoEntry){
         new InfoBox({
