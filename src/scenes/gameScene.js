@@ -95,7 +95,7 @@ export default class GameScene extends Phaser.Scene{
         })
     }
     expandInfo(infoEntry){
-        this.scene.launch(SCENE_KEYS.INFO_SCENE,infoEntry);
+        if (!this.scene.isActive(SCENE_KEYS.INFO_SCENE)) this.scene.launch(SCENE_KEYS.INFO_SCENE,infoEntry);
     }
 
 }
