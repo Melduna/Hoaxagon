@@ -62,16 +62,21 @@ export default class GameScene extends Phaser.Scene{
     create() {
         this.infoDatabase = this.cache.json.get(JSON_KEYS.INFO_DB);
         this.cameras.main.setBackgroundColor( PALETTE_HEX.DarkGrey);
+
         let { width, height } = this.sys.game.canvas;
+
         this.timer = 180000;
-        this.timeDisplay = this.add.text(10,0,"",TEXT_CONFIG.Heading).setColor(PALETTE_RGBA.White);
+        this.timeDisplay = this.add.text(10, 0, "", TEXT_CONFIG.Heading).setColor(PALETTE_RGBA.White);
         this.updateTimer();
+
         this.points = 0;
         this.pointsDisplay = this.add.text(10,height-10,"Score: "+this.points,TEXT_CONFIG.Heading2).setColor(PALETTE_RGBA.White).setOrigin(0,1);
+        
         this.KEYS = this.input.keyboard.addKeys(KEYBINDS);
-        this.createInfoBox(1000,380,this.infoDatabase.FALLACIES.POST_HOC);
-        this.createInfoBox(1000,500,this.infoDatabase.FALLACIES.AD_VERECUNDIAM);
-        this.createInfoBox(1000,620,this.infoDatabase.FALLACIES.AD_CONSEQUENTIAM);
+        
+        this.createInfoBox(1000, 380, this.infoDatabase.FALLACIES.POST_HOC);
+        this.createInfoBox(1000, 500, this.infoDatabase.FALLACIES.AD_VERECUNDIAM);
+        this.createInfoBox(1000, 620, this.infoDatabase.FALLACIES.AD_CONSEQUENTIAM);
 
     }
     update(time, dt) {
@@ -101,88 +106,119 @@ export default class GameScene extends Phaser.Scene{
 
 
     }
-    /**Returns an array with the number of minutes and seconds remaining on the timer.
+
+    /**
+     * Returns an array with the number of minutes and seconds remaining on the timer.
+     * @returns {Array<number>}
      */
-    getTime(){
-        let seconds = this.timer/1000;
-        return [Math.floor(seconds/60),Math.floor(seconds%60)];
+    getTime() {
+        let seconds = this.timer / 1000;
+        return [Math.floor(seconds / 60), Math.floor(seconds % 60)];
     }
-    /**Adds the specified time to the scene timer, in miliseconds.
+
+    /**
+     * Adds the specified time to the scene timer, in miliseconds.
      * @param {number} time
      */
     addTimeRaw(time){
-        this.timer = Math.max(0,this.timer+=time);
+        this.timer = Math.max(0, this.timer += time);
         this.updateTimer();
     }
-    /**Adds the specified time to the scene timer, in seconds.
+
+    /**
+     * Adds the specified time to the scene timer, in seconds.
      * @param {number} time
      */
-    addTime(time){
-        this.timer = Math.max(0,this.timer+=(time*1000));
+    addTime(time) {
+        this.timer = Math.max(0, this.timer += (time * 1000));
         this.updateTimer();
     }
-    /**Pauses the current scene and initializes PauseScene while closing info boxes.
+
+    /**
+     * Pauses the current scene and initializes PauseScene while closing info boxes.
      */
-    pauseGame(){
+    pauseGame() {
         this.scene.launch(SCENE_KEYS.PAUSE_SCENE);
         this.scene.pause();
-        if (this.scene.isActive(SCENE_KEYS.INFO_SCENE))this.scene.stop(SCENE_KEYS.INFO_SCENE);
+
+        if (this.scene.isActive(SCENE_KEYS.INFO_SCENE))
+            this.scene.stop(SCENE_KEYS.INFO_SCENE);
     }
-    /**Updates the timer display to match the remaining time.
+
+    /**
+     * Updates the timer display to match the remaining time.
      */
-    updateTimer(){
+    updateTimer() {
         let TD = this.getTime();
-        this.timeDisplay.text = (TD[0]+":"+Math.floor(TD[1]/10)+TD[1]%10);
-        if (this.timer<11000) this.timeDisplay.setColor(PALETTE_RGBA.RedAlert);
-        else if (this.timer<31000) this.timeDisplay.setColor(PALETTE_RGBA.AmberAlert);
-        else if (this.timer<61000) this.timeDisplay.setColor(PALETTE_RGBA.YellowAlert);
-        else if (this.timer<181000) this.timeDisplay.setColor(PALETTE_RGBA.White);
+        const minutes = TD[0];
+        const seconds = Math.floor(TD[1] / 10) + TD[1] % 10;
+
+        this.timeDisplay.text = (`${minutes}:${seconds}`);
+
+        if (this.timer < 11000) this.timeDisplay.setColor(PALETTE_RGBA.RedAlert);
+        else if (this.timer < 31000) this.timeDisplay.setColor(PALETTE_RGBA.AmberAlert);
+        else if (this.timer < 61000) this.timeDisplay.setColor(PALETTE_RGBA.YellowAlert);
+        else if (this.timer < 181000) this.timeDisplay.setColor(PALETTE_RGBA.White);
         else this.timeDisplay.setColor(PALETTE_RGBA.Teal);
     }
-    /**Adds the specified amount to the game's score.
+
+    /**
+     * Adds the specified amount to the game's score.
      * @param {number} points
      */
-    addPoints(points){
+    addPoints(points) {
         this.points+=points;
         this.updateScore();
     }
-    /**Updates the score display to match the current score.
+
+    /**
+     * Updates the score display to match the current score.
      */
-    updateScore(){
-        this.pointsDisplay.text = "Score: "+this.points;
+    updateScore() {
+        this.pointsDisplay.text = `Score: ${this.points}`;
     }
-    /**Enforces the time limit for a Streak.
+
+    /**
+     * Enforces the time limit for a Streak.
      * @param {number} dt
      */
-    updateStreak(dt){
+    updateStreak(dt) {
         this.streak.timeSince += dt;
-        if (this.streak.timeSince>=this.falloffTime){ 
+
+        if (this.streak.timeSince>=this.falloffTime) { 
             this.streak.count = 0;
             this.streak.timeSince = 0;
             this.streak.BoostPity = 0;
         }
     }
-    /**Advances the Streak by 1.
+
+    /**
+     * Advances the Streak by 1.
      */
-    streakUp(){
+    streakUp() {
         this.streak.count++;
         this.streak.BoostPity++;
         this.streak.timeSince = 0;
     }
-    /**Determines whether the next message will be Boosted or not. Chance scales off Streak.
+
+    /**
+     * Determines whether the next message will be Boosted or not. Chance scales off Streak.
      */
     rollForBoost(){
-        let pity = this.streak.BoostPity**2;
-        let roll = Math.floor(Math.random()*100);
-        if (pity>=roll){
+        let pity = this.streak.BoostPity ** 2;
+        let roll = Math.floor(Math.random() * 100);
+        if (pity >= roll) {
             //TODO: Next message is Boosted
             this.streak.BoostPity = 0;
         }
     }
-    /**Creates a clickable infobox at the set position, with a given entry.
+
+    /**
+     * Creates a clickable infobox at the set position, with a given entry.
      * @param {number} posX
      * @param {number} posy
      * @param {object} infoEntry
+     * @returns {InfoBox}
      */
     createInfoBox(posx,posy,infoEntry){
         new InfoBox({
@@ -195,11 +231,13 @@ export default class GameScene extends Phaser.Scene{
             clickCallback: ()=>{this.expandInfo(infoEntry);}
         })
     }
-    /**Activates InfoScene according to the clicked infobox.
+
+    /**
+     * Activates InfoScene according to the clicked infobox.
      * @param {object} infoEntry
      */
-    expandInfo(infoEntry){
-        if (!this.scene.isActive(SCENE_KEYS.INFO_SCENE)) this.scene.launch(SCENE_KEYS.INFO_SCENE,infoEntry);
+    expandInfo(infoEntry) {
+        if (!this.scene.isActive(SCENE_KEYS.INFO_SCENE)) 
+            this.scene.launch(SCENE_KEYS.INFO_SCENE, infoEntry);
     }
-
 }
