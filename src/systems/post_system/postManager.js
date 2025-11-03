@@ -6,6 +6,8 @@ export const FALLACY_TYPE = {
     AD_HOMINEM: "AD_HOMINEM"
 };
 
+export const POST_WIDTH = 400;
+
 /**
  * Class that handles the production of a random post from the list given a context of the
  * types of posts that it can build.
@@ -18,21 +20,78 @@ export class PostManager {
     scene;
 
     /**
-     * @type {Array(Post)}
+     * @type {Object}
      */
-    postList;
+    postDataBase;
+
+    /**
+     * @type {Array<PostDef>}
+     */
+    _postList;
+
+    /**
+     * Keeps track of the current post element that the manager will build in the next `buildNewPost()` call.
+     * @type {number}
+     */
+    _postListPosition;
 
     constructor() {
 
-        this.postList = this.scene.cache.json.get(JSON_KEYS.POST_LIST);
+        this.postDataBase = this.scene.cache.json.get(JSON_KEYS.POST_LIST);
     }
 
     /**
      * 
-     * @param {FALLACY_TYPE} fallacyType 
+     * @param {Array<String>} fallacyTypes
      */
-    loadPosts(fallacyType) {
+    loadPosts(fallacyTypes) {
         
-        
+        // Ensuring the parameters are right
+        console.assert(fallacyTypes instanceof Array, "fallacyType must be an Array");
+        fallacyTypes.forEach((fallacyType) => {
+            console.assert(fallacyType in FALLACY_TYPE, "All fallacyTypes elements must be a FALLACY_TYPE");
+        });
+
+        this._postList = []; // Clear
+
+        this.postDataBase.posts.forEach((postDef) => {
+            if(fallacyTypes.includes(postDef.fallacyType))
+                this._postList.push(postDef);
+        });
+
+        this.shufflePostList();
+
+        this._postListPosition = 0;
+    }
+
+    /**
+     * Randomize de post definition elements in _postList()
+     */
+    shufflePostList() {
+        // Fisher-Yates algorithm to shuffle O(n)
+        let i = this._postList.length;
+        let aux, randIndx;
+
+        // If there are elements to shuffle
+        while(i) {
+            // Random element in the not shuffled parto of the array
+            randIndx = Math.floor(Math.random() * i--);
+
+            // Exchange with the current index
+            aux = this._postList[i];
+            this._postList[i] = this._postList[randIndx];
+            this._postList[randIndx] = aux;
+        }
+    }
+
+    buildNewPostObject() {
+        this._postListPosition++;
+
+        if(this._postListPosition >= this._postList.length) {
+            this._postListPosition = 0;
+            this.shufflePostList();
+        }
+
+        return new PostBoxObject(this.scene, 0, 0, this._postList.text, POST_WIDTH);
     }
 }

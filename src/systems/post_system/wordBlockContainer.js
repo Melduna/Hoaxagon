@@ -14,7 +14,7 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
 
     /**
      * Array of `WordBlock` objects.
-     * @type {Array(WordBlock)}
+     * @type {Array<WordBlock>}
      */
     wordList = new Array();
 
