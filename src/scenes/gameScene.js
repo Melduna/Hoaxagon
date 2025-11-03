@@ -4,6 +4,10 @@ import { PALETTE_HEX, PALETTE_RGBA } from "../utils/Palette.js";
 import InfoBox from "../utils/infoBox.js";
 import { TEXT_CONFIG } from "../utils/textConfigs.js";
 
+import { PostManager } from '../systems/post_system/postManager.js'
+import { FallacyInfoPanel } from '../systems/ui_system/fallacyInfoPanel.js'
+import { ScrollAreaContainer } from '../systems/scroll_system/scrollAreaContainer.js';
+
 export default class GameScene extends Phaser.Scene{
     //TODO: Progresión de niveles
     //TODO: Variante para modo entrenamiento y arcade
@@ -52,7 +56,19 @@ export default class GameScene extends Phaser.Scene{
         */
     falloffTime = 10000;
 
-    constructor(){
+    /**
+     * The centered X position of the generated `PostBoxObject`s.
+     * @type {number}
+     */
+    postBoxCenterX;
+
+    /**
+     * The centered Y position of the generated `PostBoxObject`s.
+     * @type {number}
+     */
+    postBoxCenterY;
+
+    constructor() {
         super(SCENE_KEYS.GAME_SCENE);
     }
 
@@ -73,12 +89,17 @@ export default class GameScene extends Phaser.Scene{
         this.pointsDisplay = this.add.text(10,height-10,"Score: "+this.points,TEXT_CONFIG.Heading2).setColor(PALETTE_RGBA.White).setOrigin(0,1);
         
         this.KEYS = this.input.keyboard.addKeys(KEYBINDS);
-        
-        this.createInfoBox(1000, 380, this.infoDatabase.FALLACIES.POST_HOC);
-        this.createInfoBox(1000, 500, this.infoDatabase.FALLACIES.AD_VERECUNDIAM);
-        this.createInfoBox(1000, 620, this.infoDatabase.FALLACIES.AD_CONSEQUENTIAM);
 
+        this.postBoxCenterX = this.cameras.main.centerX * 0.8;
+        this.postBoxCenterY = this.cameras.main.centerY;
+
+        let infoPanel = new FallacyInfoPanel(this, 900, 300, 400, 350);
+
+        infoPanel.addInfoBox(this.createInfoBox(0, 0, this.infoDatabase.FALLACIES.POST_HOC));
+        infoPanel.addInfoBox(this.createInfoBox(0, 0, this.infoDatabase.FALLACIES.AD_VERECUNDIAM));
+        infoPanel.addInfoBox(this.createInfoBox(0, 0, this.infoDatabase.FALLACIES.AD_CONSEQUENTIAM));
     }
+
     update(time, dt) {
         //#region timer
         this.addTimeRaw(-dt);
@@ -185,7 +206,7 @@ export default class GameScene extends Phaser.Scene{
     updateStreak(dt) {
         this.streak.timeSince += dt;
 
-        if (this.streak.timeSince>=this.falloffTime) { 
+        if (this.streak.timeSince >= this.falloffTime) { 
             this.streak.count = 0;
             this.streak.timeSince = 0;
             this.streak.BoostPity = 0;
@@ -221,7 +242,7 @@ export default class GameScene extends Phaser.Scene{
      * @returns {InfoBox}
      */
     createInfoBox(posx,posy,infoEntry){
-        new InfoBox({
+        return new InfoBox({
             scene: this,
             x: posx,
             y: posy,
@@ -229,7 +250,7 @@ export default class GameScene extends Phaser.Scene{
             height: 100,
             info:infoEntry,
             clickCallback: ()=>{this.expandInfo(infoEntry);}
-        })
+        });
     }
 
     /**

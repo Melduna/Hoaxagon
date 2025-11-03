@@ -25,6 +25,12 @@ export class PostManager {
     postDataBase;
 
     /**
+     * The object from the JSON that defines the current post that the PostManager has generated.
+     * @type {PostDef}
+     */
+    currentPostDefinition;
+
+    /**
      * @type {Array<PostDef>}
      */
     _postList;
@@ -96,11 +102,13 @@ export class PostManager {
     buildNewPostObject() {
         this._postListPosition++;
 
+        this.currentPostDefinition = this._postList[this._postListPosition];
+
         if(this._postListPosition >= this._postList.length) {
             this._postListPosition = 0;
             this.shufflePostList();
         }
 
-        return new PostBoxObject(this.scene, 0, 0, this._postList[this._postListPosition].text, POST_WIDTH);
+        return new PostBoxObject(this.scene, 0, 0, this.currentPostDefinition.text, POST_WIDTH);
     }
 }
