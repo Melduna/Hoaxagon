@@ -19,7 +19,7 @@ export default class InfoScene extends Phaser.Scene{
         let { width, height } = this.sys.game.canvas;
         this.SCREENX = width;
         this.SCREENY = height;
-        new InfoBox({scene:this,x:width/2-300,y: height/2-200,width: 600, height: 400,info:infoEntry,expanded:true})
+        new InfoBox({scene:this,x:width/2,y: height/2,width: 600, height: 400,info:infoEntry,expanded:true})
         this.add.text(width/2-300,height/2+210,"Pulsa en cualquier lugar para continuar.",TEXT_CONFIG.ParagraphBold).setColor(PALETTE_RGBA.White);
         this.input.on('pointerdown', () => {this.scene.stop()});
     }
