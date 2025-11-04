@@ -24,6 +24,11 @@ export default class GameScene extends Phaser.Scene{
     timeDisplay;
 
     /**
+     * @type {Phaser.GameObjects.Text}
+     */
+    streakDisplay;
+
+    /**
      * @type {boolean}
      */
     pause = false;
@@ -54,7 +59,7 @@ export default class GameScene extends Phaser.Scene{
     /**
         * @type {number}
         */
-    falloffTime = 10000;
+    falloffTime = 5000;
 
     /**
      * The centered X position of the generated `PostBoxObject`s.
@@ -99,6 +104,9 @@ export default class GameScene extends Phaser.Scene{
         this.timer = 180000;
         this.timeDisplay = this.add.text(10, 0, "", TEXT_CONFIG.Heading).setColor(PALETTE_RGBA.White);
         this.updateTimer();
+
+        this.streakDisplay = this.add.text(20,height-60,"Combo",TEXT_CONFIG.SubHeading2).setColor(PALETTE_RGBA.YellowAlert).setOrigin(0,1);
+        this.streakDisplay.setVisible(false);
 
         this.points = 0;
         this.pointsDisplay = this.add.text(10,height-10,"Score: "+this.points,TEXT_CONFIG.Heading2).setColor(PALETTE_RGBA.White).setOrigin(0,1);
@@ -259,9 +267,7 @@ export default class GameScene extends Phaser.Scene{
         this.streak.timeSince += dt;
 
         if (this.streak.timeSince >= this.falloffTime) { 
-            this.streak.count = 0;
-            this.streak.timeSince = 0;
-            this.streak.BoostPity = 0;
+            this.resetStreak();
         }
     }
 
@@ -274,6 +280,20 @@ export default class GameScene extends Phaser.Scene{
         this.streak.timeSince = 0;
         let streakPoints = Math.min(150,50*Math.floor(this.streak.count/3));
         this.addPoints(streakPoints);
+        if (this.streak.count>=3){
+            this.streakDisplay.setVisible(true);
+            this.streakDisplay.text = this.streak.count + "x Combo! +"+streakPoints+" score."
+        }
+    }
+
+    /**
+     * Sets all Streak scores to 0.
+     */
+    resetStreak(){
+            this.streak.count = 0;
+            this.streak.timeSince = 0;
+            this.streak.BoostPity = 0;
+            this.streakDisplay.setVisible(false);
     }
 
     /**
@@ -331,9 +351,7 @@ export default class GameScene extends Phaser.Scene{
      * Deducts time upon failing to evaluate a message.
      */
     fail(){
-        this.streak.count = 0;
-        this.streak.timeSince = 0;
-        this.streak.BoostPity = 0;
+        this.resetStreak();
         this.addTime(-30);
         console.log("BAD CHOICE");
     }
