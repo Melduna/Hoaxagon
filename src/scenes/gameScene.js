@@ -269,7 +269,7 @@ export default class GameScene extends Phaser.Scene{
         this.streak.count++;
         this.streak.BoostPity++;
         this.streak.timeSince = 0;
-        let streakPoints = Math.min(150,50*Math.floor(this.streak/3));
+        let streakPoints = Math.min(150,50*Math.floor(this.streak.count/3));
         this.addPoints(streakPoints);
     }
 
