@@ -115,7 +115,7 @@ export default class GameScene extends Phaser.Scene{
         infoPanel.addInfoBox(this.createInfoBox(0, 0, this.infoDatabase.FALLACIES.AD_CONSEQUENTIAM));
 
         // TextBox for post user info
-        this.postUserInfo = this.add.text(900, 150, "Usuario: ", TEXT_CONFIG.Paragraph).setColor(PALETTE_RGBA.DarkerGrey);
+        this.postUserInfo = this.add.text(900, 150, "Usuario: ", TEXT_CONFIG.SubHeading).setColor(PALETTE_RGBA.DarkerGrey);
         
         this.postManager = new PostManager(this);
         this.postManager.loadPosts(["ALL"]);
@@ -128,24 +128,24 @@ export default class GameScene extends Phaser.Scene{
         acceptButton.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.loadNextPost();
 
-          /*  if  (this.postManager.currentPostDefinition.fallacyType === "NONE") {
-                this.success();
+            if  (this.postManager.currentPostDefinition.fallacyType === "NONE") {
+                console.log("SUCCESS"); //this.success();
             }
             else {
-                this.fail();
-            }*/
+                console.log("FAIL"); // this.fail();
+            }
         });
 
         declineButton.setInteractive();
         declineButton.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.loadNextPost();
 
-          /*  if  (this.postManager.currentPostDefinition.fallacyType !== "NONE") {
-                this.success();
+            if  (this.postManager.currentPostDefinition.fallacyType !== "NONE") {
+                console.log("SUCCESS"); //this.success();
             } 
             else {
-                this.fail();
-            }*/
+                console.log("FAIL"); // this.fail();
+            }
         });
     }
 
@@ -262,7 +262,6 @@ export default class GameScene extends Phaser.Scene{
         }
     }
 
-
     /**
      * Advances the Streak by 1.
      */
@@ -320,8 +319,8 @@ export default class GameScene extends Phaser.Scene{
      * Awards points upon correctly evaluating a message.
      */
     success(){
-        this.addPoints(100);
-        this.streakUp();
+     /*   this.addPoints(100);
+        this.streakUp();*/
         consople.log("GOOD CHOICE");
     }
 
@@ -329,10 +328,10 @@ export default class GameScene extends Phaser.Scene{
      * Deducts time upon failing to evaluate a message.
      */
     fail(){
-        this.streak.count = 0;
+      /*  this.streak.count = 0;
         this.streak.timeSince = 0;
         this.streak.BoostPity = 0;
-        this.addTime(-30);
+        this.addTime(-30);*/
         console.log("BAD CHOICE");
     }
 

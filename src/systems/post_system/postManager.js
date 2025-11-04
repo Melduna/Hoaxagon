@@ -102,12 +102,12 @@ export class PostManager {
     buildNewPostObject() {
         this._postListPosition++;
 
-        this.currentPostDefinition = this._postList[this._postListPosition];
-
         if(this._postListPosition >= this._postList.length) {
             this._postListPosition = 0;
             this.shufflePostList();
         }
+
+        this.currentPostDefinition = this._postList[this._postListPosition];
 
         return new PostBoxObject(this.scene, 0, 0, this.currentPostDefinition.text, POST_WIDTH);
     }
