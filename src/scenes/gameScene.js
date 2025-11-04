@@ -113,16 +113,17 @@ export default class GameScene extends Phaser.Scene{
         infoPanel.addInfoBox(this.createInfoBox(0, 0, this.infoDatabase.FALLACIES.POST_HOC));
         infoPanel.addInfoBox(this.createInfoBox(0, 0, this.infoDatabase.FALLACIES.AD_VERECUNDIAM));
         infoPanel.addInfoBox(this.createInfoBox(0, 0, this.infoDatabase.FALLACIES.AD_CONSEQUENTIAM));
+        infoPanel.addInfoBox(this.createInfoBox(0, 0, this.infoDatabase.FALLACIES.AD_IGNORANTIAM));
 
         // TextBox for post user info
-        this.postUserInfo = this.add.text(900, 150, "Usuario: ", TEXT_CONFIG.SubHeading).setColor(PALETTE_RGBA.DarkerGrey);
+        this.postUserInfo = this.add.text(900, 150, "Usuario: ", TEXT_CONFIG.SubHeading).setColor(PALETTE_RGBA.White);
         
         this.postManager = new PostManager(this);
         this.postManager.loadPosts(["ALL"]);
         this.loadNextPost();
 
-        const acceptButton = this.add.text(900, 250, "ACCEPT", TEXT_CONFIG.SubHeading).setColor(PALETTE_RGBA.DarkerGrey);
-        const declineButton = this.add.text(1100, 250, "DECLINE", TEXT_CONFIG.SubHeading).setColor(PALETTE_RGBA.DarkerGrey);
+        const acceptButton = this.add.text(900, 250, "ACCEPT", TEXT_CONFIG.SubHeading).setColor(PALETTE_RGBA.White);
+        const declineButton = this.add.text(1100, 250, "DECLINE", TEXT_CONFIG.SubHeading).setColor(PALETTE_RGBA.White);
 
         acceptButton.setInteractive();
         acceptButton.on(Phaser.Input.Events.POINTER_DOWN, () => {
