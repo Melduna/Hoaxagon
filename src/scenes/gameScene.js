@@ -126,26 +126,28 @@ export default class GameScene extends Phaser.Scene{
 
         acceptButton.setInteractive();
         acceptButton.on(Phaser.Input.Events.POINTER_DOWN, () => {
-            this.loadNextPost();
 
-            if  (this.postManager.currentPostDefinition.fallacyType === "NONE") {
+            if (this.postManager.currentPostDefinition.fallacyType === "NONE") {
                 this.success();
             }
             else {
                 this.fail();
             }
+            
+            this.loadNextPost();
         });
 
         declineButton.setInteractive();
         declineButton.on(Phaser.Input.Events.POINTER_DOWN, () => {
-            this.loadNextPost();
 
-            if  (this.postManager.currentPostDefinition.fallacyType !== "NONE") {
+            if (this.postManager.currentPostDefinition.fallacyType !== "NONE") {
                 this.success();
             } 
             else {
                 this.fail();
             }
+            
+            this.loadNextPost();
         });
     }
 
