@@ -39,6 +39,12 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
      * @type {boolean}
      */
     wordBlockSelectionEnabled = true;
+
+    /**
+     * Function that handles the pointer down event to select `WordBlock`s.
+     * @type {function}
+     */
+    _pointerDownHandler;
     
     /**
      * In which line is the container currently adding `WordBlock` objects.
@@ -68,11 +74,27 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
 
         scene.add.existing(this);
 
+        this._pointerDownHandler = (pointer, game_objects) => {
+            game_objects.forEach((game_object) => this.handleWordBlockSelection(game_object));
+        };
+
+        this.scene.input.on(Phaser.Input.Events.POINTER_DOWN, this._pointerDownHandler);        
+    }
+
+    destroy(fromScene) {
+        // Remove registered event handler
+        if (this._pointerDownHandler && this.scene && this.scene.input) {
+            this.scene.input.off(Phaser.Input.Events.POINTER_DOWN, this._pointerDownHandler);
+            this._pointerDownHandler = null;
+        }
+
+        // Destroy explicitly the WordBlocks stored in the array  
+        this.wordList.forEach(wordBlock => {
+            if (wordBlock && typeof wordBlock.destroy === 'function') wordBlock.destroy(fromScene);
+        });
         
-        scene.input.on(Phaser.Input.Events.POINTER_DOWN, (pointer, game_objects) => {
-		 	game_objects.forEach((game_object) => this.handleWordBlockSelection(game_object));
-		});
-        
+        // Call the parent's destroy method to clean up the container's children
+        super.destroy(fromScene);
     }
 
     /**

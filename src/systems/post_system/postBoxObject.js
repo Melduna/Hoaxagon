@@ -25,6 +25,11 @@ export class PostBoxObject extends Phaser.GameObjects.Container {
     boxNineSlice;
 
     /**
+     * @type {WordBlockContainer}
+     */
+    wordBlockContainer;
+
+    /**
      * 
      * @param {Phaser.Scene} scene 
      * @param {number} positionX 
@@ -47,7 +52,7 @@ export class PostBoxObject extends Phaser.GameObjects.Container {
 
         this.boxNineSlice.setOrigin(0, 0);
 
-        let wordBlockContainer = new WordBlockContainer(
+        this.wordBlockContainer = new WordBlockContainer(
             scene, 
             REALATIVE_POSITIONS.WORD_BLOCK_CONTAINER_X,
             REALATIVE_POSITIONS.WORD_BLOCK_CONTAINER_Y,
@@ -55,14 +60,31 @@ export class PostBoxObject extends Phaser.GameObjects.Container {
             width - REALATIVE_POSITIONS.WORD_BLOCK_CONTAINER_X * 2
         );
 
-		wordBlockContainer.buildText(text);
+		this.wordBlockContainer.buildText(text);
 
         this.add(this.boxNineSlice)
-        this.add(wordBlockContainer);
+        this.add(this.wordBlockContainer);
 
         const height = NINE_SLICE_DIMENSIONS.BOTTOM_WIDTH + NINE_SLICE_DIMENSIONS.TOP_WIDTH 
-            + REALATIVE_POSITIONS.WORD_BLOCK_CONTAINER_X*2 + wordBlockContainer.getBounds().height;
+            + REALATIVE_POSITIONS.WORD_BLOCK_CONTAINER_X*2 + this.wordBlockContainer.getBounds().height;
         
         this.boxNineSlice.setSize(width, height);
+    }
+
+    // Ensure destruction of the children and the WordBlockContainer
+    destroy(fromScene) {
+        if (this.wordBlockContainer && typeof this.wordBlockContainer.destroy === 'function') {
+            this.wordBlockContainer.destroy(fromScene);
+            this.wordBlockContainer = null;
+        }
+
+        // Destroy other children that may remain
+        if (this.list && this.list.length) {
+            this.list.forEach(child => {
+                if (child && typeof child.destroy === 'function') child.destroy(fromScene);
+            });
+        }
+
+        super.destroy(fromScene);
     }
 }
