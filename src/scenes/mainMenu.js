@@ -1,4 +1,4 @@
-import { IMAGE_KEYS, SCENE_KEYS } from '../utils/CommonKeys.js'
+import { IMAGE_KEYS, SCENE_KEYS,ANIM_KEYS } from '../utils/CommonKeys.js'
 import Button from "../utils/button.js";
 import ImageButton from '../utils/imageButton.js';
 import { TEXT_CONFIG } from "../utils/textConfigs.js";
@@ -41,6 +41,16 @@ export default class MainMenu extends Phaser.Scene{
 
     }
     create(){
+        // this.anims.create({
+        //     key: ANIM_KEYS.ICOSAMUEL,
+        //     frames: this.anims.generateFrameNumbers(IMAGE_KEYS.ICOSAMUEL, {start:0,end:23}),
+        //     frameRate: 24,
+        //     repeat: -1
+        // });
+        // var icosamuel = this.add.sprite(0,0,IMAGE_KEYS.ICOSAMUEL).setOrigin(0,0);
+        // icosamuel.play(ANIM_KEYS.ICOSAMUEL);
+        // icosamuel.setScale(0.5,0.5);
+
         this.cameras.main.setBackgroundColor(PALETTE_RGBA.MiddleGrey);
         let { width, height } = this.sys.game.canvas;
         this.add.text(width/2,100,"HOAXAGON",TEXT_CONFIG.Heading).setColor(PALETTE_RGBA.White).setOrigin(0.5,0.5)
