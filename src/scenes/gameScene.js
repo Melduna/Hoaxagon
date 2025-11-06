@@ -88,6 +88,11 @@ export default class GameScene extends Phaser.Scene{
      */
     postUserInfo;
 
+    /**
+     * @type {boolean}
+     */
+    boost = false;
+
     constructor() {
         super(SCENE_KEYS.GAME_SCENE);
     }
@@ -111,6 +116,8 @@ export default class GameScene extends Phaser.Scene{
         this.points = 0;
         this.pointsDisplay = this.add.text(10,height-10,"Score: "+this.points,TEXT_CONFIG.Heading2).setColor(PALETTE_RGBA.White).setOrigin(0,1);
         
+        this.boostDisplay = this.add.image(300,300,IMAGE_KEYS.TEMP_SPRITE).setVisible(false);
+
         this.KEYS = this.input.keyboard.addKeys(KEYBINDS);
 
         this.postBoxCenterX = this.cameras.main.centerX * 0.8;
@@ -284,6 +291,7 @@ export default class GameScene extends Phaser.Scene{
             this.streakDisplay.setVisible(true);
             this.streakDisplay.text = this.streak.count + "x Combo! +"+streakPoints+" score."
         }
+        this.rollForBoost();
     }
 
     /**
@@ -303,6 +311,7 @@ export default class GameScene extends Phaser.Scene{
         let pity = this.streak.BoostPity ** 2;
         let roll = Math.floor(Math.random() * 100);
         if (pity >= roll) {
+            this.setBoost(true);
             //TODO: Next message is Boosted
             this.streak.BoostPity = 0;
         }
@@ -339,9 +348,24 @@ export default class GameScene extends Phaser.Scene{
     }
 
     /**
+     * Determines whether the next message is Boosted, and updates the UI accordingly.
+     * @param {boolean} boost
+     */
+    setBoost(boost){
+        this.boost = boost;
+        if (this.boost) this.boostDisplay.setVisible(true);
+        else this.boostDisplay.setVisible(false);
+    }
+
+    /**
      * Awards points upon correctly evaluating a message.
      */
     success(){
+        if (this.boost){
+            this.addPoints(200);
+            this.addTime(10);
+            this.setBoost(false);
+        }
         this.addPoints(100);
         this.streakUp();
         console.log("GOOD CHOICE");
@@ -351,6 +375,7 @@ export default class GameScene extends Phaser.Scene{
      * Deducts time upon failing to evaluate a message.
      */
     fail(){
+        this.setBoost(false);
         this.resetStreak();
         this.addTime(-30);
         console.log("BAD CHOICE");
