@@ -117,6 +117,8 @@ export default class GameScene extends Phaser.Scene{
         this.pointsDisplay = this.add.text(10,height-10,"Score: "+this.points,TEXT_CONFIG.Heading2).setColor(PALETTE_RGBA.White).setOrigin(0,1);
         
         this.boostDisplay = this.add.image(320,350,IMAGE_KEYS.TEMP_SPRITE).setVisible(false).setScale(0.5,0.5);
+        this.boostDisplay.setDepth(1);
+
 
         this.KEYS = this.input.keyboard.addKeys(KEYBINDS);
 
@@ -191,7 +193,6 @@ export default class GameScene extends Phaser.Scene{
         }
         if (Phaser.Input.Keyboard.JustDown(this.KEYS.BOOST)){
             this.setBoost(true);
-            this.boostDisplay.setDepth(1);
         }
         //#endregion
         //#endregion
@@ -393,7 +394,5 @@ export default class GameScene extends Phaser.Scene{
         this.currentPostObject = this.postManager.buildNewPostObject();
         this.currentPostObject.setPosition(this.postBoxCenterX - 200, this.postBoxCenterY);
 
-        this.postUserInfo.setText("Usuario: " +  this.postManager.currentPostDefinition.user);
-        this.boostDisplay.setDepth(1);
-    }
+        this.postUserInfo.setText("Usuario: " +  this.postManager.currentPostDefinition.user);    }
 }
