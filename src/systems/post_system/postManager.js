@@ -31,6 +31,26 @@ export class PostManager {
     currentPostDefinition;
 
     /**
+     * @type {Phaser.GameObjects.Container}
+     */
+    postFieldContainer;
+
+    /**
+     * @type {Phaser.GameObjects.Text}
+     */
+    userNameTag;
+
+    /**
+     * @type {Phaser.GameObjects.Image}
+     */
+    userPicture;
+
+    /**
+     * @type {PostBoxObject}
+     */
+    currentPostObject;
+
+    /**
      * @type {Array<PostDef>}
      */
     _postList;
@@ -42,10 +62,12 @@ export class PostManager {
     _postListPosition;
 
     /**
-     * 
-     * @param {Phaser.Scene} scene 
+     * @param {Phaser.Scene} scene
+     * @param {Phaser.GameObjects.Container} postFieldContainer
+     * @param {Phaser.GameObjects.Text} userNameTag
+     * @param {Phaser.GameObjects.Image} userPicture
      */
-    constructor(scene) {
+    constructor(scene/*, postFieldContainer, userNameTag, userPicture*/) {
         this.scene = scene;
 
         this.postDataBase = scene.cache.json.get(JSON_KEYS.POST_LIST);
@@ -110,5 +132,17 @@ export class PostManager {
         this.currentPostDefinition = this._postList[this._postListPosition];
 
         return new PostBoxObject(this.scene, 0, 0, this.currentPostDefinition.text, POST_WIDTH);
+    }
+
+    loadNextPostInUI() {
+        if(this.currentPostObject){
+            this.currentPostObject.destroy();
+        }
+
+        this.currentPostObject = this.buildNewPostObject();
+
+        this.postFieldContainer.add(this.currentPostObject);
+        this.userNameTag.setText(/*"Usuario: " +  */this.currentPostDefinition.user);
+        //this.userPicture.setTexture(newPost.userPicture);
     }
 }
