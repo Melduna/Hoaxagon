@@ -33,6 +33,11 @@ export class ScoreManager {
     points = 0;
 
     /**
+        * @type {number}
+        */
+    falloffTime = 5000;
+
+    /**
      * @type {Phaser.GameObjects.Text}
      */
     pointsDisplay = null;
@@ -46,6 +51,11 @@ export class ScoreManager {
      * @type {Streak}
      */
     streak = new Streak();
+
+    /**
+     * @type {boolean}
+     */
+    boost = false;
 
     /**
      * @param {Phaser.Scene} scene
@@ -87,6 +97,10 @@ export class ScoreManager {
         .setColor(PALETTE_RGBA.YellowAlert)
         .setOrigin(0, 1)
         .setVisible(false);
+    }
+
+    update(time, dt) {
+        this.updateStreak(dt);
     }
 
     /**
