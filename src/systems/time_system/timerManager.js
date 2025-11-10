@@ -36,7 +36,7 @@ export class TimerManager {
     }
 
     update(time, dt) {
-        this.timer -= dt;
+        this.addTimeMilliseconds(-dt);
     }
     
     /**

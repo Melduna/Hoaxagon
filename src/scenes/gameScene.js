@@ -5,6 +5,7 @@ import InfoBox from "../utils/infoBox.js";
 import { TEXT_CONFIG } from "../utils/textConfigs.js";
 
 import { PostManager } from '../systems/post_system/postManager.js'
+import { TimerManager } from "../systems/time_system/timerManager.js";
 import { FallacyInfoPanel } from '../systems/ui_system/fallacyInfoPanel.js'
 import { PostBoxObject } from '../systems/post_system/postBoxObject.js';
 
@@ -19,16 +20,6 @@ export default class GameScene extends Phaser.Scene{
     //TODO: Progresión de niveles
     //TODO: Variante para modo entrenamiento y arcade
     //TODO: Implementación de modo inspección, mensajes, barra de información.
-    
-    /**
-     * @type {number}
-     */
-    timer;
-   
-    /**
-     * @type {Phaser.GameObjects.Text}
-     */
-    timeDisplay;
 
     /**
      * @type {Phaser.GameObjects.Text}
@@ -86,6 +77,11 @@ export default class GameScene extends Phaser.Scene{
     postManager;
 
     /**
+     * @type {TimerManager}
+     */
+    timerManager;
+
+    /**
      * @type {PostBoxObject}
      */
     currentPostObject;
@@ -113,10 +109,8 @@ export default class GameScene extends Phaser.Scene{
 
 
         let { width, height } = this.sys.game.canvas;
-
-        this.timer = 180000;
-        this.timeDisplay = this.add.text(10, 0, "", TEXT_CONFIG.Heading).setColor(PALETTE_RGBA.White);
-        this.updateTimer();
+        
+        this.timerManager = new TimerManager(this, 180000);
 
         this.streakDisplay = this.add.text(20,height-60,"Combo",TEXT_CONFIG.SubHeading2).setColor(PALETTE_RGBA.YellowAlert).setOrigin(0,1);
         this.streakDisplay.setVisible(false);
@@ -174,7 +168,7 @@ export default class GameScene extends Phaser.Scene{
 
     update(time, dt) {
         //#region timer
-        this.addTimeRaw(-dt);
+        this.timerManager.update(time, dt);
         this.updateStreak(dt);
         //#endregion
 
@@ -189,10 +183,10 @@ export default class GameScene extends Phaser.Scene{
         //#endregion
         //#region debug
         if (Phaser.Input.Keyboard.JustDown(this.KEYS.TIMEUP)){
-            this.addTime(30);
+            this.timerManager.addTimeSeconds(30);
         }
         if (Phaser.Input.Keyboard.JustDown(this.KEYS.TIMEDOWN)){
-            this.addTime(-30);
+            this.timerManager.addTimeSeconds(-30);
         }
         if (Phaser.Input.Keyboard.JustDown(this.KEYS.BOOST)){
             this.setBoost(true);
@@ -208,33 +202,6 @@ export default class GameScene extends Phaser.Scene{
     }
 
     /**
-     * Returns an array with the number of minutes and seconds remaining on the timer.
-     * @returns {Array<number>}
-     */
-    getTime() {
-        let seconds = this.timer / 1000;
-        return [Math.floor(seconds / 60), Math.floor(seconds % 60)];
-    }
-
-    /**
-     * Adds the specified time to the scene timer, in miliseconds.
-     * @param {number} time
-     */
-    addTimeRaw(time){
-        this.timer = Math.max(0, this.timer += time);
-        this.updateTimer();
-    }
-
-    /**
-     * Adds the specified time to the scene timer, in seconds.
-     * @param {number} time
-     */
-    addTime(time) {
-        this.timer = Math.max(0, this.timer += (time * 1000));
-        this.updateTimer();
-    }
-
-    /**
      * Pauses the current scene and initializes PauseScene while closing info boxes.
      */
     pauseGame() {
@@ -243,23 +210,6 @@ export default class GameScene extends Phaser.Scene{
 
         if (this.scene.isActive(SCENE_KEYS.INFO_SCENE))
             this.scene.stop(SCENE_KEYS.INFO_SCENE);
-    }
-
-    /**
-     * Updates the timer display to match the remaining time.
-     */
-    updateTimer() {
-        let TD = this.getTime();
-        const minutes = TD[0];
-        const seconds = (Math.floor(TD[1] / 10)).toString() + (TD[1] % 10).toString();
-
-        this.timeDisplay.text = (`${minutes}:${seconds}`);
-
-        if (this.timer < 11000) this.timeDisplay.setColor(PALETTE_RGBA.RedAlert);
-        else if (this.timer < 31000) this.timeDisplay.setColor(PALETTE_RGBA.AmberAlert);
-        else if (this.timer < 61000) this.timeDisplay.setColor(PALETTE_RGBA.YellowAlert);
-        else if (this.timer < 181000) this.timeDisplay.setColor(PALETTE_RGBA.White);
-        else this.timeDisplay.setColor(PALETTE_RGBA.Teal);
     }
 
     /**
@@ -375,7 +325,7 @@ export default class GameScene extends Phaser.Scene{
     success(){
         if (this.boost){
             this.addPoints(200);
-            this.addTime(10);
+            this.timerManager.addTimeSeconds(10);
             this.setBoost(false);
         }
         this.addPoints(100);
@@ -389,7 +339,7 @@ export default class GameScene extends Phaser.Scene{
     fail(){
         this.setBoost(false);
         this.resetStreak();
-        this.addTime(-30);
+        this.timerManager.addTimeSeconds(-30);
         console.log("BAD CHOICE");
     }
 }
