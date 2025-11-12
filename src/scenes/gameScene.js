@@ -1,12 +1,13 @@
 import {KEYBINDS} from "../utils/Keybinds.js";
 import { IMAGE_KEYS, SCENE_KEYS, JSON_KEYS } from '../utils/CommonKeys.js'
 import { PALETTE_HEX, PALETTE_RGBA } from "../utils/Palette.js";
-import InfoBox from "../utils/infoBox.js";
+import { InfoBox } from "../utils/infoBox.js";
 import { TEXT_CONFIG } from "../utils/textConfigs.js";
 
 import { PostManager } from '../systems/post_system/postManager.js'
 import { TimerManager } from "../systems/time_system/timerManager.js";
 import { ScoreManager } from "../systems/score_system/scoreManager.js";
+import { InspectorManager } from "../systems/inspection_system/inspectorManager.js";
 
 import { FallacyInfoPanel } from '../systems/ui_system/fallacyInfoPanel.js'
 import { PostBoxObject } from '../systems/post_system/postBoxObject.js';
@@ -44,6 +45,11 @@ export default class GameScene extends Phaser.Scene{
     scoreManager;
 
     /**
+     * @type {InspectorManager} 
+     */
+    inspectorManager;
+
+    /**
      * @type {PostBoxObject}
      */
     currentPostObject;
@@ -76,6 +82,9 @@ export default class GameScene extends Phaser.Scene{
         config.fallacies.forEach(element => {
         this.addFallacy(element);
         });
+
+        this.inspectorManager = new InspectorManager(this, this.infoPanel, this.postManager, null);
+
         this.cameras.main.setBackgroundColor( PALETTE_HEX.DarkGrey);
 
         const acceptButton = this.add.text(900, 250, "ACCEPT", TEXT_CONFIG.SubHeading).setColor(PALETTE_RGBA.White);
@@ -140,7 +149,16 @@ export default class GameScene extends Phaser.Scene{
     }
 
     addFallacy(fallacy){
-        this.infoPanel.addInfoBox(this.createInfoBox(0, 0, fallacy));
+        this.infoPanel.addInfoBox(
+            new InfoBox({
+                scene: this,
+                x: 0,
+                y: 0,
+                width: 400,
+                height: 100,
+                info: fallacy,
+            })
+        );
     }
 
     /**
@@ -152,36 +170,6 @@ export default class GameScene extends Phaser.Scene{
 
         if (this.scene.isActive(SCENE_KEYS.INFO_SCENE))
             this.scene.stop(SCENE_KEYS.INFO_SCENE);
-    }
-
-    /**
-     * Creates a clickable infobox at the set position, with a given entry.
-     * @param {number} posX
-     * @param {number} posy
-     * @param {object} infoEntry
-     * @returns {InfoBox}
-     */
-    createInfoBox(posx,posy,infoEntry){
-        return new InfoBox({
-            scene: this,
-            x: posx,
-            y: posy,
-            width: 400,
-            height: 100,
-            info:infoEntry,
-            clickCallback: ()=>{this.expandInfo(infoEntry);}
-        });
-    }
-
-    /**
-     * Activates InfoScene according to the clicked infobox.
-     * @param {object} infoEntry
-     */
-    expandInfo(infoEntry) {
-        let mousex = this.game.input.mousePointer.x;
-        let mousey = this.game.input.mousePointer.y;
-        if (!this.scene.isActive(SCENE_KEYS.INFO_SCENE) && mousey>360) 
-            this.scene.launch(SCENE_KEYS.INFO_SCENE, infoEntry);
     }
 
     /**

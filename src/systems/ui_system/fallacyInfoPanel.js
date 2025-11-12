@@ -16,6 +16,16 @@ export class FallacyInfoPanel extends Phaser.GameObjects.Container {
     scrollArea;
 
     /**
+     * @type {Array<InfoBox>}
+     */
+    infoBoxes = new Array();
+
+    /**
+     * @type {function(InfoBox)}
+     */
+    onInfoBoxClicked = function(infoBox) {};
+
+    /**
      * 
      * @param {Phaser.Scene} scene 
      * @param {number} positionX 
@@ -51,6 +61,13 @@ export class FallacyInfoPanel extends Phaser.GameObjects.Container {
      * @param {Phaser.GameObjects.Container} infoBox 
      */
     addInfoBox(infoBox) {
-        this.scrollArea.addGameObject(infoBox,infoBox.width/2,infoBox.height/2);
+        this.scrollArea.addGameObject(infoBox, infoBox.width / 2, infoBox.height / 2);
+        
+        this.infoBoxes.push(infoBox);
+
+        // Add click event listener to the info box
+        infoBox.on(Phaser.Input.Events.POINTER_DOWN, () => {
+            this.onInfoBoxClicked(infoBox);
+        });
     }
 }

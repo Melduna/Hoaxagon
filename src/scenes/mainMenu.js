@@ -49,18 +49,31 @@ export default class MainMenu extends Phaser.Scene{
         // icosamuel.play(ANIM_KEYS.ICOSAMUEL_RIGHT);
 
         this.cameras.main.setBackgroundColor(PALETTE_RGBA.MiddleGrey);
+
         let { width, height } = this.sys.game.canvas;
+
         this.add.text(width/2,100,"HOAXAGON",TEXT_CONFIG.Heading).setColor(PALETTE_RGBA.White).setOrigin(0.5,0.5)
-        this.playButton = new Button({scene:this,
+
+        this.playButton = new Button({
+            scene:this,
             x: width/2, y: height/2,
             width: 300, height:300,
             color: PALETTE_HEX.White,
-            clickCallback: ()=>{this.scene.start(SCENE_KEYS.GAME_SCENE,{
-                fallacies:[this.infoDatabase.FALLACIES.POST_HOC,
-                    this.infoDatabase.FALLACIES.AD_VERECUNDIAM,
-                    this.infoDatabase.FALLACIES.AD_CONSEQUENTIAM]})},
+            clickCallback: () => {
+                this.scene.start(
+                    SCENE_KEYS.GAME_SCENE,
+                    {
+                        fallacies:[
+                            this.infoDatabase.FALLACIES.POST_HOC,
+                            this.infoDatabase.FALLACIES.AD_VERECUNDIAM,
+                            this.infoDatabase.FALLACIES.AD_CONSEQUENTIAM
+                        ]
+                    }
+                )
+            },
             text: "PLAY",
             textConfig:TEXT_CONFIG.Heading,
-            textColor: PALETTE_RGBA.DarkerGrey});
+            textColor: PALETTE_RGBA.DarkerGrey
+        });
     }
 }

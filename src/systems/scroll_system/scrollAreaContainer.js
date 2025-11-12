@@ -58,16 +58,13 @@ export class ScrollAreaContainer extends Phaser.GameObjects.Container {
 
         this.add(this._viewportAreaContainer);
 
-        // temp<<<<<<<<<<<<<<<<<
-        /*for(let i = 0; i < 10; i++) {
-            this._contentAreaContainer.add(new PostBoxObject(scene, 0, 150*i, "Textito\nDel bueno", 400));
-        }*/
-        // <<<<<<<<<<<<<<<<<<<<<
-
         // Definition of the mask that will cut the content out of the bounds of the viewport
         this.setSize(width, height);
 
         scene.input.on('wheel', (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
+
+            if(!this._viewportAreaContainer.getBounds().contains(pointer.x, pointer.y)) return;
+
             const scrollAmount = deltaY * 0.5;
 
             let newY = this._contentAreaContainer.y - scrollAmount;
@@ -102,9 +99,9 @@ export class ScrollAreaContainer extends Phaser.GameObjects.Container {
      * 
      * @param {Phaser.GameObjects.Container} gameObject 
      */
-    addGameObject(gameObject,offsetX,offsetY) {
+    addGameObject(gameObject, offsetX, offsetY) {
         this._contentAreaContainer.add(gameObject);
-        gameObject.setPosition(offsetX, this._addedNewElementPositionY+offsetY);
+        gameObject.setPosition(offsetX, this._addedNewElementPositionY + offsetY);
 
         if(typeof gameObject["getBounds"] === 'function')
             this._addedNewElementPositionY += gameObject.getBounds().height + this._elementVSeparation;
