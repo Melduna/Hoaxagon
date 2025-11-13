@@ -166,6 +166,8 @@ export class PostManager {
      * @param {String} veredictResult 
      */
     replacePostInUI(veredictResult) {
+        console.assert(veredictResult in POST_VEREDICT, "veredictResult must be a POST_VEREDICT");
+        
         if(veredictResult === POST_VEREDICT.SUCCESSFUL) {
             this.scene.tweens.chain({
                 targets: this.currentPostObject,
