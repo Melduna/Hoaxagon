@@ -116,6 +116,11 @@ export class InspectorManager {
     handleInspectorButtonClick() {
         this.inspectionActive = !this.inspectionActive;
 
+        if(this.inspectionActive)
+            this.inspectorModeButton.setTint(0xc3c327);
+        else
+            this.inspectorModeButton.setTint(0xffffff);
+
         // Deselect all info boxes
         this.infoPanel.infoBoxes.forEach((infoBox) => {
             infoBox.setSelectionState(false);

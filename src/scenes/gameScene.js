@@ -93,6 +93,8 @@ export default class GameScene extends Phaser.Scene{
         acceptButton.setInteractive();
         acceptButton.on(Phaser.Input.Events.POINTER_DOWN, () => {
 
+            if(this.inspectorManager.inspectionActive) return;
+
             if (this.postManager.currentPostDefinition.fallacyType === "NONE") {
                 this.success();
             }
@@ -103,6 +105,8 @@ export default class GameScene extends Phaser.Scene{
 
         declineButton.setInteractive();
         declineButton.on(Phaser.Input.Events.POINTER_DOWN, () => {
+
+            if(this.inspectorManager.inspectionActive) return;
 
             if (this.postManager.currentPostDefinition.fallacyType !== "NONE") {
                 this.success();
