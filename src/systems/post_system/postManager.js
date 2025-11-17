@@ -254,6 +254,31 @@ export class PostManager {
         this.currentPostObject = newPost;
         this.currentPostObject.setPosition(this.postBoxCenterX - 200, this.postBoxCenterY);
 
+        const yPos = this.currentPostObject.y;
+
+        this.scene.tweens.chain({
+            targets: this.currentPostObject,
+            ease: "Linear",
+            repeat: -1,
+            delay: 0,
+            duration: 800,
+
+            tweens: [
+                {
+                    y: yPos + 4,
+                    duration: 1000,
+                },
+                {
+                    y: yPos - 4,
+                    duration: 2000,
+                },
+                {
+                    y: yPos,
+                    duration: 1000,
+                },
+            ],
+        });
+
         this.postUserInfo.setText("Usuario: " + this.currentPostDefinition.user);
     }
 

@@ -53,7 +53,7 @@ export class InspectorManager {
         const SCREEN_HEIGHT = this.scene.sys.game.canvas.height;
 
         // Inspector Button Settings
-        this.inspectorModeButton = this.scene.add.image(80, SCREEN_HEIGHT - 180, IMAGE_KEYS.INSPECTOR_BUTTON);
+        this.inspectorModeButton = this.scene.add.image(100, SCREEN_HEIGHT - 180, IMAGE_KEYS.INSPECTOR_BUTTON);
         this.inspectorModeButton.setInteractive();
         this.inspectorModeButton.on(Phaser.Input.Events.POINTER_UP, () => { 
             this.handleInspectorButtonClick() 

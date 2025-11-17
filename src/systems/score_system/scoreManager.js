@@ -43,6 +43,11 @@ export class ScoreManager {
     pointsDisplay = null;
 
     /**
+     * @type {Phaser.GameObjects.Text}
+     */
+    pointsDisplayShadow;
+
+    /**
      * @type {Phaser.GameObjects.Image}
      */
     boostDisplay = null;
@@ -58,6 +63,12 @@ export class ScoreManager {
     boost = false;
 
     /**
+     * To facilitate moving the UI elements in the scene.
+     * @type {Phaser.GameObjects.Container}
+     */
+    uiElementsConatiner;
+
+    /**
      * @param {Phaser.Scene} scene
      * @param {Phaser.GameObjects.Text} pointsDisplay 
      * @param {Phaser.GameObjects.Image} boostDisplay 
@@ -71,8 +82,16 @@ export class ScoreManager {
         const SCREEN_HEIGHT = this.scene.sys.game.canvas.height;
 
         // Create score display
+        this.pointsDisplayShadow = this.scene.add.text(
+            5, 5,
+            `Score: ${this.points}`, 
+            TEXT_CONFIG.Heading2
+        )
+        .setColor(PALETTE_RGBA.TranslucentGrey)
+        .setOrigin(0, 1);
+
         this.pointsDisplay = this.scene.add.text(
-            10, SCREEN_HEIGHT - 10,
+            0, 0,
             `Score: ${this.points}`, 
             TEXT_CONFIG.Heading2
         )
@@ -90,13 +109,18 @@ export class ScoreManager {
 
         // Create streak display
         this.streakDisplay = this.scene.add.text(
-            20, SCREEN_HEIGHT - 60,
+            10, 50,
             "Combo",
             TEXT_CONFIG.SubHeading2
         )
         .setColor(PALETTE_RGBA.YellowAlert)
         .setOrigin(0, 1)
         .setVisible(false);
+
+        this.uiElementsConatiner = this.scene.add.container(
+            60, SCREEN_HEIGHT - 40, 
+            [ this.pointsDisplayShadow, this.pointsDisplay, this.streakDisplay ]
+        );
     }
 
     update(time, dt) {
@@ -117,26 +141,16 @@ export class ScoreManager {
      */
     updateScore() {
         this.pointsDisplay.text = `Score: ${this.points}`;
+        this.pointsDisplayShadow.text = this.pointsDisplay.text;
 
-        // Asegúrate de llamar a esto en un lugar donde tengas acceso a la escena (this.scene)
+        this.scene.tweens.chain({
+            targets: [this.pointsDisplayShadow, this.pointsDisplay ],
+            ease: 'Power1',
+            loop: 0,
 
-        const myTimeline = this.scene.tweens.chain({
-            targets: this.pointsDisplay, // El objeto al que se aplicarán todos los tweens
-            ease: 'Power1',    // Función de easing por defecto para todos los pasos
-            loop: 0,           // 0 para no repetir, o -1 para loop infinito
-
-            // Array de TWEENS que se ejecutan en secuencia
             tweens: [
-                {
-                    //scaleY: 1.2,
-                    scaleX: 1.2,
-                    duration: 50
-                },
-                {
-                    //scaleY: 1,
-                    scaleX: 1,
-                    duration: 50
-                }
+                { scaleX: 1.2, duration: 50 },
+                { scaleX: 1, duration: 50 }
             ]
         });
     }

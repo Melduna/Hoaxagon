@@ -68,6 +68,18 @@ export default class GameScene extends Phaser.Scene{
     }
     create(config) {
         this.infoDatabase = this.cache.json.get(JSON_KEYS.INFO_DB);
+
+        this.add.image(0, 0, IMAGE_KEYS.BACKGROUND_TRIANGLES)
+            .setOrigin(0, 0)
+            .setTint(PALETTE_HEX.MiddleGrey)
+            .setAlpha(0.15);
+
+        this.add.rectangle(
+            890, 0,
+            420, this.cameras.main.height,
+            PALETTE_HEX.MiddleGrey
+        )
+        .setOrigin(0, 0);
         
         this.timerManager = new TimerManager(this, 180000);
 
@@ -85,7 +97,7 @@ export default class GameScene extends Phaser.Scene{
 
         this.inspectorManager = new InspectorManager(this, this.infoPanel, this.postManager);
 
-        this.cameras.main.setBackgroundColor( PALETTE_HEX.DarkGrey);
+        this.cameras.main.setBackgroundColor( PALETTE_HEX.LightGrey);//LightGrey
 
         const acceptButton = this.add.text(900, 250, "ACCEPT", TEXT_CONFIG.SubHeading).setColor(PALETTE_RGBA.White);
         const declineButton = this.add.text(1100, 250, "DECLINE", TEXT_CONFIG.SubHeading).setColor(PALETTE_RGBA.White);

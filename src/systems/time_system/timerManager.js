@@ -1,5 +1,6 @@
 import { TEXT_CONFIG } from "../../utils/textConfigs.js";
 import { PALETTE_RGBA } from "../../utils/Palette.js";
+import { IMAGE_KEYS } from '../../utils/CommonKeys.js';
 
 export class TimerManager {
 
@@ -19,18 +20,47 @@ export class TimerManager {
      */
     timeDisplay;
 
+    /**
+     * @type {Phaser.GameObjects.Text}
+     */
+    timeDisplayShadow;
+
+    /**
+     * To facilitate moving the UI elements in the scene.
+     * @type {Phaser.GameObjects.Container}
+     */
+    uiElementsConatiner;
+
     constructor(scene, initialTimeMilliseconds) {
         console.assert(scene instanceof Phaser.Scene, "ScoreManager: scene is not a Phaser.Scene");
         
         this.scene = scene;
         this.timer = initialTimeMilliseconds;
 
-        this.timeDisplay = this.scene.add.text(
-            10, 0,
+        const clockImage = this.scene.add.image(25, 80, IMAGE_KEYS.CHRONO_CLOCK)
+            .setOrigin(0, 0.5);
+
+        this.timeDisplayShadow = this.scene.add.text(
+            175, 80,
             '', 
             TEXT_CONFIG.Heading
         )
-        .setColor(PALETTE_RGBA.White);
+        .setColor(PALETTE_RGBA.TranslucentGrey)
+        .setOrigin(0, 0.5);
+
+        this.timeDisplay = this.scene.add.text(
+            170, 75,
+            '', 
+            TEXT_CONFIG.Heading
+        )
+        .setColor(PALETTE_RGBA.White)
+        .setOrigin(0, 0.5);
+
+        this.uiElementsConatiner = this.scene.add.container(
+            45, 25, 
+            [clockImage, this.timeDisplayShadow, this.timeDisplay]
+        )
+        .setScale(0.9, 0.9);
         
         this.updateTimer();
     }
@@ -47,7 +77,27 @@ export class TimerManager {
         const minutes = TD[0];
         const seconds = (Math.floor(TD[1] / 10)).toString() + (TD[1] % 10).toString();
 
-        this.timeDisplay.text = (`${minutes}:${seconds}`);
+        const newText = `${minutes}:${seconds}`;
+
+        // Only update and animate if the text has changed
+        if (newText !== this.timeDisplay.text) {
+            this.timeDisplay.text = newText;
+            this.timeDisplayShadow.text = newText;
+
+            // Avoid tween collision
+            this.scene.tweens.killTweensOf([this.timeDisplay, this.timeDisplayShadow]);
+
+            this.scene.tweens.chain({
+                targets: [this.timeDisplay, this.timeDisplayShadow],
+                ease: 'Power1',
+                duration: 20,
+                loop: 0,
+                tweens: [
+                    { scaleY: 1.02, scaleX: 1.02, duration: 100 },
+                    { scaleY: 1,   scaleX: 1,   duration: 100 }
+                ]
+            });
+        }
 
         if (this.timer < 11000) this.timeDisplay.setColor(PALETTE_RGBA.RedAlert);
         else if (this.timer < 31000) this.timeDisplay.setColor(PALETTE_RGBA.AmberAlert);

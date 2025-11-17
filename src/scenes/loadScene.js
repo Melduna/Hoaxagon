@@ -39,6 +39,7 @@ export default class LoadScene extends Phaser.Scene {
         this.load.spritesheet(IMAGE_KEYS.ICOSAMUEL,"./assets/images/ICOSAMUEL/icosamuel_spritesheet.png",{frameWidth:540,frameHeight:540});
         
         this.load.image(IMAGE_KEYS.BACKGROUND_TRIANGLE, './assets/images/background_triangle.png');
+        this.load.image(IMAGE_KEYS.BACKGROUND_TRIANGLES, './assets/images/background_triangles.png');
         this.load.image(IMAGE_KEYS.INSPECTOR_BUTTON, './assets/images/inspector_button.png');
         this.load.image(IMAGE_KEYS.CHRONO_CLOCK, './assets/images/chrono_clock.png');
 
