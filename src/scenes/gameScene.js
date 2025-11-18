@@ -208,7 +208,10 @@ export default class GameScene extends Phaser.Scene{
 
 
     }
-
+    /**
+     * Adds the provided fallacy's infobox to the panel.
+     * @param {Object} fallacy 
+     */
     addFallacy(fallacy){
         this.infoPanel.addInfoBox(
             new InfoBox({
@@ -268,6 +271,10 @@ export default class GameScene extends Phaser.Scene{
 
         console.log("BAD CHOICE");
     }
+    /**
+     * Selects a fallacy at random from the remaining candidates.
+     * @returns The selected fallacy.
+     */
     rollNewFallacy(){
         let size = this.fallacyPool.length;
         let index = Math.floor(Math.random()*size);
@@ -276,6 +283,9 @@ export default class GameScene extends Phaser.Scene{
         this.fallacyPool.splice(index,1);
         return newFallacy;
     }
+    /**
+     * Raises the current level by 1, adding a new fallacy to the list.
+     */
     levelUp(){
         console.log(this.level);
         this.level++;
