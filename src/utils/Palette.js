@@ -24,4 +24,5 @@ export const PALETTE_RGBA = {
     RedAlert: 'rgba(149, 41, 41, 1)',
     Teal: 'rgba(83, 208, 143, 1)',
     TranslucentGrey:  'rgba(35, 35, 35, 0.75)',
+    Void: 'rgba(0, 0, 0, 0)'
 }
