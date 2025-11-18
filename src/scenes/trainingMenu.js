@@ -10,13 +10,18 @@ import { ScrollAreaContainer } from '../systems/scroll_system/scrollAreaContaine
 export default class TrainingMenu extends Phaser.Scene{
     scrollArea;
     buttons;
+    buttonWidth = 600;
+    buttonHeight = 100;
     constructor(){
         super(SCENE_KEYS.TRAINING_MENU_SCENE);
     }
     create(){
         this.infoDatabase = this.cache.json.get(JSON_KEYS.INFO_DB);
 
-        let { width, height } = this.sys.game.canvas;
+        const { width, height } = this.sys.game.canvas;
+
+        this.width = width;
+        this.height = height;
 
         this.add.text(width/2,100,"TRAINING",TEXT_CONFIG.Heading2).setColor(PALETTE_RGBA.White).setOrigin(0.5,0.5)
         this.KEYS = this.input.keyboard.addKeys(KEYBINDS);
@@ -24,13 +29,18 @@ export default class TrainingMenu extends Phaser.Scene{
         this.infoDatabase = this.cache.json.get(JSON_KEYS.INFO_DB);
 
         this.cameras.main.setBackgroundColor(PALETTE_RGBA.MiddleGrey);
-        this.scrollArea = new ScrollAreaContainer(this,width/2-300,200,600,800);
+        this.scrollArea = new ScrollAreaContainer(this,this.width/2-300,200,600,450);
+
+        //this.createNewButton(this.infoDatabase.FALLACIES.POST_HOC)
+        this.scrollArea.addGameObject
+        (this.createNewButton(this.infoDatabase.FALLACIES.POST_HOC),this.buttonWidth/2,this.buttonHeight/2);
+        this.scrollArea.addGameObject
+        (this.createNewButton(this.infoDatabase.FALLACIES.AD_IGNORANTIAM),this.buttonWidth/2,this.buttonHeight/2);
+        this.scrollArea.addGameObject
+        (this.createNewButton(this.infoDatabase.FALLACIES.AD_VERECUNDIAM),this.buttonWidth/2,this.buttonHeight/2);
+        this.scrollArea.addGameObject
+        (this.createNewButton(this.infoDatabase.FALLACIES.AD_CONSEQUENTIAM),this.buttonWidth/2,this.buttonHeight/2);
         console.log(this.scrollArea);
-        this.createNewButton(this.infoDatabase.FALLACIES.POST_HOC)
-        //this.scrollArea.addGameObject(this.createNewButton(this.infoDatabase.FALLACIES.POST_HOC));
-        //this.scrollArea.addGameObject(this.createNewButton(this.infoDatabase.FALLACIES.AD_IGNORANTIAM));
-        //this.scrollArea.addGameObject(this.createNewButton(this.infoDatabase.FALLACIES.AD_VERECUNDIAM));
-        //this.scrollArea.addGameObject(this.createNewButton(this.infoDatabase.FALLACIES.AD_CONSEQUENTIAM));
     }
     update(time,dt){
         if (Phaser.Input.Keyboard.JustDown(this.KEYS.PAUSE)){
@@ -38,9 +48,8 @@ export default class TrainingMenu extends Phaser.Scene{
         }
     }
     createNewButton(fallacy){
-        let { width, height } = this.sys.game.canvas;
-        return new Button({scene:this, x:width/2,y:250,width:500,height:200,color:PALETTE_HEX.White,
-            text:fallacy.name,textConfig:TEXT_CONFIG.Heading2,textColor:PALETTE_RGBA.DarkerGrey,
+        return new Button({scene:this, x:this.width/2,y:250,width:this.buttonWidth,height:this.buttonHeight,color:PALETTE_HEX.White,
+            text:fallacy.name,textConfig:TEXT_CONFIG.SubHeading,textColor:PALETTE_RGBA.DarkerGrey,
             clickCallback:()=>{this.scene.start(SCENE_KEYS.GAME_SCENE,{fallacies:[fallacy]})}});
     }
 }
