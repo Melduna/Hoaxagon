@@ -64,7 +64,11 @@ export default class GameScene extends Phaser.Scene{
      */
     levelThresholds = [1000,5000,15000,30000,50000,-1];
 
-    fallacyPool = [];
+        /**
+     * @type {boolean}
+     */
+    arcade = false;
+
     constructor() {
         super(SCENE_KEYS.GAME_SCENE);
     }
@@ -112,7 +116,11 @@ export default class GameScene extends Phaser.Scene{
             this.fallacyPool.push(element);
         });
         // this.fallacyPool = this.infoDatabase.FALLACIES;
-        if (config.arcade)this.addFallacy(this.rollNewFallacy());
+        
+        arcade = config.fallacies.length == 0
+        if (arcade){ 
+            this.addFallacy(this.rollNewFallacy());
+        }
 
         this.timerManager = new TimerManager(this, 180000);
 
@@ -252,7 +260,6 @@ export default class GameScene extends Phaser.Scene{
         console.log("BAD CHOICE");
     }
     rollNewFallacy(){
-        console.log(this.fallacyPool);
         let size = this.fallacyPool.length;
         let index = Math.floor(Math.random()*size);
         

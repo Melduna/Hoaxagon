@@ -64,8 +64,7 @@ export default class MainMenu extends Phaser.Scene{
                     SCENE_KEYS.GAME_SCENE,
                     {
                         fallacies:[
-                        ],
-                        arcade:true
+                        ]
                     }
                 )
             },
