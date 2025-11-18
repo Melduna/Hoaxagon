@@ -36,6 +36,11 @@ export default class TrainingMenu extends Phaser.Scene{
         (this.createNewButton(this.infoDatabase.FALLACIES[i]),this.buttonWidth/2,this.buttonHeight/2);
         }
         console.log(this.scrollArea);
+
+        this.menuButton = new Button ({scene:this,x:width-120,y:60,
+            width:200,height:80,
+            color:PALETTE_HEX.White,text:"BACK",textConfig:TEXT_CONFIG.Heading3,textColor: PALETTE_RGBA.DarkerGrey,
+            clickCallback:()=>{this.scene.start(SCENE_KEYS.MAIN_MENU_SCENE)}});
     }
     update(time,dt){
         if (Phaser.Input.Keyboard.JustDown(this.KEYS.PAUSE)){
