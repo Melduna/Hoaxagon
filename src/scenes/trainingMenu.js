@@ -31,19 +31,10 @@ export default class TrainingMenu extends Phaser.Scene{
         this.cameras.main.setBackgroundColor(PALETTE_RGBA.MiddleGrey);
         this.scrollArea = new ScrollAreaContainer(this,this.width/2-300,200,600,450);
 
-        //this.createNewButton(this.infoDatabase.FALLACIES.POST_HOC)
-        this.scrollArea.addGameObject
-        (this.createNewButton(this.infoDatabase.FALLACIES.POST_HOC),this.buttonWidth/2,this.buttonHeight/2);
-        this.scrollArea.addGameObject
-        (this.createNewButton(this.infoDatabase.FALLACIES.AD_IGNORANTIAM),this.buttonWidth/2,this.buttonHeight/2);
-        this.scrollArea.addGameObject
-        (this.createNewButton(this.infoDatabase.FALLACIES.AD_VERECUNDIAM),this.buttonWidth/2,this.buttonHeight/2);
-        this.scrollArea.addGameObject
-        (this.createNewButton(this.infoDatabase.FALLACIES.AD_CONSEQUENTIAM),this.buttonWidth/2,this.buttonHeight/2);
-        this.scrollArea.addGameObject
-        (this.createNewButton(this.infoDatabase.FALLACIES.AD_HOMINEM),this.buttonWidth/2,this.buttonHeight/2);
-        this.scrollArea.addGameObject
-        (this.createNewButton(this.infoDatabase.FALLACIES.AD_POPULUM),this.buttonWidth/2,this.buttonHeight/2);
+        for (let i = 0; i<this.infoDatabase.FALLACIES.length;i++){
+            this.scrollArea.addGameObject
+        (this.createNewButton(this.infoDatabase.FALLACIES[i]),this.buttonWidth/2,this.buttonHeight/2);
+        }
         console.log(this.scrollArea);
     }
     update(time,dt){
