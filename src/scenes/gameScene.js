@@ -174,7 +174,6 @@ export default class GameScene extends Phaser.Scene{
             const newFallacy = this.rollNewFallacy();
 
             this.addFallacy(newFallacy);
-            this.scene.pause();
 
             this.scene.launch(SCENE_KEYS.INFO_SCENE, {
                 fallacyObj: newFallacy,
@@ -185,7 +184,11 @@ export default class GameScene extends Phaser.Scene{
             config.fallacies.forEach(element => {
                 this.addFallacy(element);
             });
-            this.timerManager.enabled = false;
+            this.timerManager.setEnabled(false);
+            this.scene.launch(SCENE_KEYS.INFO_SCENE, {
+                fallacyObj: config.fallacies[0],
+                infoType: INFO_TYPE.NEW_TYPE_INFO
+            }); // Notification Window
         }
     }
     
@@ -307,7 +310,6 @@ export default class GameScene extends Phaser.Scene{
         let newFallacy = this.rollNewFallacy();
 
         this.addFallacy(newFallacy);
-        this.scene.pause();
         this.scene.launch(SCENE_KEYS.INFO_SCENE, {
             fallacyObj: newFallacy,
             infoType: INFO_TYPE.NEW_TYPE_INFO

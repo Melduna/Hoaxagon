@@ -43,6 +43,8 @@ export default class InfoScene extends Phaser.Scene {
                 this.buildInfoBox(config.fallacyObj, config.infoType);
             },
         });
+        if (config.infoType === INFO_TYPE.NEW_TYPE_INFO) 
+            this.scene.pause(SCENE_KEYS.GAME_SCENE);
     }
 
     buildInfoBox(fallacyObj, infoType) {
@@ -70,7 +72,6 @@ export default class InfoScene extends Phaser.Scene {
         }
 
         if(infoType === INFO_TYPE.NEW_TYPE_INFO) {
-
             this.add.text(
                 width / 2, height / 2 - 270,
                 "NUEVA FALACIA",
