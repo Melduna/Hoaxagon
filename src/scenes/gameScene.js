@@ -97,6 +97,11 @@ export default class GameScene extends Phaser.Scene{
      */
     fallacyPool;
 
+    /**
+     * @type {Array<String>}
+     */
+    loadedFallacyNames = [];
+
     constructor() {
         super(SCENE_KEYS.GAME_SCENE);
     }
@@ -178,12 +183,17 @@ export default class GameScene extends Phaser.Scene{
                 fallacyObj: newFallacy,
                 infoType: INFO_TYPE.NEW_TYPE_INFO
             }); // Notification Window
+
+            this.postManager.loadPosts(this.loadedFallacyNames);
         }
         else {
-            config.fallacies.forEach(element => {
-                this.addFallacy(element);
+            config.fallacies.forEach(fallacyObj => {
+                this.addFallacy(fallacyObj);
+                this.loadedFallacyNames.push(fallacyObj.name);
             });
             this.timerManager.enabled = false;
+            
+            this.postManager.loadPosts(this.loadedFallacyNames);
         }
     }
     
@@ -293,6 +303,8 @@ export default class GameScene extends Phaser.Scene{
         
         var newFallacy = this.fallacyPool[index];
         this.fallacyPool.splice(index,1);
+        this.loadedFallacyNames.push(newFallacy.name);
+console.log(this.loadedFallacyNames);
         return newFallacy;
     }
 
@@ -309,5 +321,7 @@ export default class GameScene extends Phaser.Scene{
             fallacyObj: newFallacy,
             infoType: INFO_TYPE.NEW_TYPE_INFO
         }); // Notification Window
+
+        this.postManager.loadPosts(this.loadedFallacyNames)
     }
 }
