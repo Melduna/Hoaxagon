@@ -96,7 +96,7 @@ export default class InfoScene extends Phaser.Scene {
 
             confirmButton.setInteractive();
 
-            confirmButton.on(Phaser.Input.Events.POINTER_DOWN, () => {this.scene.stop()});
+            confirmButton.on(Phaser.Input.Events.POINTER_DOWN, () => {this.scene.resume(SCENE_KEYS.GAME_SCENE);this.scene.stop();});
         }
     }
 }

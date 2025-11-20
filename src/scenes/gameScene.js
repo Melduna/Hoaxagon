@@ -174,6 +174,8 @@ export default class GameScene extends Phaser.Scene{
             const newFallacy = this.rollNewFallacy();
 
             this.addFallacy(newFallacy);
+            this.scene.pause();
+
             this.scene.launch(SCENE_KEYS.INFO_SCENE, {
                 fallacyObj: newFallacy,
                 infoType: INFO_TYPE.NEW_TYPE_INFO
@@ -261,7 +263,7 @@ export default class GameScene extends Phaser.Scene{
         this.scoreManager.addPoints(100);
         this.scoreManager.streakUp();
 
-        if (this.arcade && this.levelThresholds[this.level] != -1 && this.scoreManager.getScore()>this.levelThresholds[this.level]) 
+        if (this.arcade && this.levelThresholds[this.level] != -1 && this.scoreManager.getScore()>=this.levelThresholds[this.level]) 
             this.levelUp();
             
         this.postManager.loadNextPostInUI(POST_VEREDICT.SUCCESSFUL);
@@ -305,6 +307,7 @@ export default class GameScene extends Phaser.Scene{
         let newFallacy = this.rollNewFallacy();
 
         this.addFallacy(newFallacy);
+        this.scene.pause();
         this.scene.launch(SCENE_KEYS.INFO_SCENE, {
             fallacyObj: newFallacy,
             infoType: INFO_TYPE.NEW_TYPE_INFO
