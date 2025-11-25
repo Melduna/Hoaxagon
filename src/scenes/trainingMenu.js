@@ -25,9 +25,7 @@ export default class TrainingMenu extends Phaser.Scene{
 
         this.add.text(width/2,100,"TRAINING",TEXT_CONFIG.Heading2).setColor(PALETTE_RGBA.White).setOrigin(0.5,0.5)
         this.KEYS = this.input.keyboard.addKeys(KEYBINDS);
-
-        this.infoDatabase = this.cache.json.get(JSON_KEYS.INFO_DB);
-
+        
         this.cameras.main.setBackgroundColor(PALETTE_RGBA.MiddleGrey);
         this.scrollArea = new ScrollAreaContainer(this,this.width/2-300,200,600,450);
 

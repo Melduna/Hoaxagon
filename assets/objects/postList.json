@@ -1,5 +1,5 @@
 {
-    "posts": [
+    "fallaciousPosts":[
         {
             "user": "Trictoria",
             "text": "'No puedes confirmar que la cuadrilanina daña tus aristas' ¿Y tú puedes confirmar que no lo hace?",
@@ -24,6 +24,32 @@
             "fallaciousSentenceID": 1,
             "difficulty": ""
         },
+        {
+            "user": "Hexandra",
+            "text": "Todo el mundo dice que el penteno no es tóxico. A ver si escuchas, Cuadricio.",
+            "userPhoto": "",
+            "fallacyType": "Ad Populum",
+            "fallaciousSentenceID": 0,
+            "difficulty": ""
+        },
+        {
+            "user": "Trictoria",
+            "text": "¿Que no tengo que preocuparme tanto sobre mi ingesta de hexágeno, Circlaudia? No sabes nada.",
+            "userPhoto": "",
+            "fallacyType": "Ad Hominem",
+            "fallaciousSentenceID": 2,
+            "difficulty": ""
+        },
+        {
+            "user": "Circlaudia",
+            "text": "No me dejan de decir que no hay un portal a Octopia bajo mi casa. Es como si no quisieran que hubiese uno.",
+            "userPhoto": "",
+            "fallacyType": "Ad Consequentiam",
+            "fallaciousSentenceID": 1,
+            "difficulty": ""
+        }
+    ],
+    "innocentPosts": [
         {
             "user": "Circlaudia",
             "text": "Si nunca has abierto un libro de aristología, te ruego que no te pongas a hablar de aristas.",
@@ -62,30 +88,6 @@
             "userPhoto": "",
             "fallacyType": "NONE",
             "fallaciousSentenceID": -1,
-            "difficulty": ""
-        },
-        {
-            "user": "Hexandra",
-            "text": "Todo el mundo dice que el penteno no es tóxico. A ver si escuchas, Cuadricio.",
-            "userPhoto": "",
-            "fallacyType": "Ad Populum",
-            "fallaciousSentenceID": 0,
-            "difficulty": ""
-        },
-        {
-            "user": "Trictoria",
-            "text": "¿Que no tengo que preocuparme tanto sobre mi ingesta de hexágeno, Circlaudia? No sabes nada.",
-            "userPhoto": "",
-            "fallacyType": "Ad Hominem",
-            "fallaciousSentenceID": 2,
-            "difficulty": ""
-        },
-        {
-            "user": "Circlaudia",
-            "text": "No me dejan de decir que no hay un portal a Octopia bajo mi casa. Es como si no quisieran que hubiese uno.",
-            "userPhoto": "",
-            "fallacyType": "Ad Consequentiam",
-            "fallaciousSentenceID": 1,
             "difficulty": ""
         }
     ]

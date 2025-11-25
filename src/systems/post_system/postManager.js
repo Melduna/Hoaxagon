@@ -94,7 +94,16 @@ export class PostManager {
         )
         .setColor(PALETTE_RGBA.White);
 
+        this.fallaciousPosts = [];
+        this.innocentPosts = [];
+        
         this.postDataBase = scene.cache.json.get(JSON_KEYS.POST_LIST);
+        this.innocentPosts = this.postDataBase.innocentPosts;
+        this.fallaciousPosts = this.postDataBase.fallaciousPosts;
+        this.postsList = this.innocentPosts.concat(this.fallaciousPosts);
+        this.innocentIndexes = [1,2,4,4,4];
+        console.log(this.innocentPosts);
+        console.log(this.fallaciousPosts);
         
         const fallacyInfoDataBase = scene.cache.json.get(JSON_KEYS.INFO_DB);
         this.fallacyTipeNames.map((fallacyType) => fallacyType.name);
@@ -116,7 +125,7 @@ export class PostManager {
 
         this._postList = []; // Clear
 
-        this.postDataBase.posts.forEach((postDef) => {
+        this.postsList.forEach((postDef) => {
             if(
                 fallacyTypes.length === 0 ||
                 fallacyTypes.includes(postDef.fallacyType) ||
@@ -126,8 +135,6 @@ export class PostManager {
         });
 
         this.shufflePostList();
-
-        console.log(this._postList);
 
         this._postListPosition = 0;
     }
