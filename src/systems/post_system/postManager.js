@@ -300,17 +300,20 @@ export class PostManager {
 
     /**
      * Registers a new `EvaluatedPostInfo` in the manager list of evaluated posts.
+     * @param {boolean} postAccepted
      * @param {boolean} playerSuccessed 
      * @param {InfoBox} selectedFallacyObj 
      */
-    savePostEvaluation(playerSuccessed, selectedFallacyObj) {
+    savePostEvaluation(postAccepted, playerSuccessed, selectedFallacyObj) {
         let selectedSentenceID = -1;
 
         // We check if the player has justified his veredict by selecting a sentence
         if(this.currentPostObject.wordBlockContainer.getSelectedSentenceIDs().length > 0)
             selectedSentenceID = this.currentPostObject.wordBlockContainer.getSelectedSentenceIDs()[0]; // We can ensure there is only one selected
 
-        this.evaluatedPostsInfo.push(new EvaluatedPostInfo(this.currentPostDefinition, playerSuccessed, selectedSentenceID, selectedFallacyObj));
+        this.evaluatedPostsInfo.push(
+            new EvaluatedPostInfo(postAccepted, this.currentPostDefinition, playerSuccessed, selectedSentenceID, selectedFallacyObj)
+        );
         console.log(this.evaluatedPostsInfo);
     }
 

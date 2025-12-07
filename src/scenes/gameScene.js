@@ -159,10 +159,10 @@ export default class GameScene extends Phaser.Scene{
             //if(this.inspectorManager.inspectionActive) return;
 
             if (this.postManager.currentPostDefinition.fallacyType === "NONE") {
-                this.success();
+                this.success(true);
             }
             else {
-                this.fail();
+                this.fail(true);
             }
         });
 
@@ -172,10 +172,10 @@ export default class GameScene extends Phaser.Scene{
             // if(this.inspectorManager.inspectionActive) return;
 
             if (this.postManager.currentPostDefinition.fallacyType !== "NONE") {
-                this.success();
+                this.success(false);
             } 
             else {
-                this.fail();
+                this.fail(false);
             }
         });
 
@@ -285,9 +285,12 @@ export default class GameScene extends Phaser.Scene{
     }
 
     /**
-     * Awards points upon correctly evaluating a message.
+     * Awards points upon correctly evaluating a message and registers the evaluation.
+     * @param {boolean} postAccepted
      */
-    success() {
+    success(postAccepted) {
+        console.assert(typeof postAccepted === "boolean", "GameScene.success: postAccepted is not a boolean");
+
         if (this.scoreManager.boost) {
             this.scoreManager.addPoints(200);
             this.scoreManager.setBoost(false);
@@ -302,7 +305,7 @@ export default class GameScene extends Phaser.Scene{
             this.levelUp();
 
         const selectedFallacyObj =  this.infoPanel.selectedInfoBox ? this.infoPanel.selectedInfoBox.fallacyObj : null; // Null if none selected
-        this.postManager.savePostEvaluation(true, selectedFallacyObj);
+        this.postManager.savePostEvaluation(postAccepted, true, selectedFallacyObj);
             
         this.postManager.loadNextPostInUI(POST_VEREDICT.SUCCESSFUL);
 
@@ -312,16 +315,19 @@ export default class GameScene extends Phaser.Scene{
     }
 
     /**
-     * Deducts time upon failing to evaluate a message.
+     * Deducts time upon failing to evaluate a message and registers the evaluation.
+     * @param {boolean} postAccepted
      */
-    fail() {    
+    fail(postAccepted) {
+        console.assert(typeof postAccepted === "boolean", "GameScene.success: postAccepted is not a boolean");
+
         this.scoreManager.setBoost(false);
         this.scoreManager.resetStreak();
 
         this.timerManager.addTimeSeconds(-30);
 
         const selectedFallacyObj =  this.infoPanel.selectedInfoBox ? this.infoPanel.selectedInfoBox.fallacyObj : null; // Null if none selected
-        this.postManager.savePostEvaluation(false, selectedFallacyObj);
+        this.postManager.savePostEvaluation(postAccepted, false, selectedFallacyObj);
             
         this.postManager.loadNextPostInUI(POST_VEREDICT.FAILURE);
 

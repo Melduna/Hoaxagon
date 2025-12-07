@@ -1,6 +1,11 @@
 
 export class EvaluatedPostInfo {
     /**
+     * @type {boolean}
+     */
+    postAccepted;
+
+    /**
      * @type {Post}
      */
     postObjectDef;
@@ -22,8 +27,9 @@ export class EvaluatedPostInfo {
      */
     selectedFallacyObj = null;
 
-    constructor(postObjectDef, playerSuccessed, sentenceSelectedID, selectedFallacyObjDef) {
+    constructor(postAccepted, postObjectDef, playerSuccessed, sentenceSelectedID, selectedFallacyObjDef) {
 
+        console.assert(typeof postAccepted === "boolean", "EvaluatedPostInfo: postAccepted is not a boolean");
         console.assert(postObjectDef !== null, "EvaluatedPostInfo: postObject is null");
         console.assert(
             Object.hasOwn(postObjectDef, "text") && 
@@ -41,6 +47,7 @@ export class EvaluatedPostInfo {
             "EvaluatedPostInfo: selectedFallacyObj is not a Fallacy"
         );
 
+        this.postAccepted = postAccepted;
         this.postObjectDef = postObjectDef;
         this.playerSuccessed = playerSuccessed;
         this.sentenceSelectedID = sentenceSelectedID;

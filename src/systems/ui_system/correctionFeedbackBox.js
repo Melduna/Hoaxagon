@@ -65,10 +65,27 @@ export class CorrectionFeedbackBox extends Phaser.GameObjects.Container {
 
         let contentHeight = 10;
 
+        // Player's decision
+        let decision = "Has marcado el post como ";
+        decision += this.evaluatedPostInfo.postAccepted ? "CORRECTO." : "FALAZ.";
+        
+        const playerDecisionText = this.scene.add.text(
+            10, contentHeight,
+            decision,
+            TEXT_CONFIG.Paragraph
+        )
+        .setTint(PALETTE_RGBA.DarkerGrey)
+        .setOrigin(0, 0)
+        .setWordWrapWidth(width - 20);
+        
+        this.add(playerDecisionText);
+
+        contentHeight += playerDecisionText.getBounds().height + 10;
+
         // PostBoxObject
         this.postBoxObject = new PostBoxObject(
             scene,
-            10, 10,
+            10, contentHeight,
             this.evaluatedPostInfo.postObjectDef.text,
             width - 20
         );
@@ -85,22 +102,36 @@ export class CorrectionFeedbackBox extends Phaser.GameObjects.Container {
         contentHeight += this.postBoxObject.getBounds().height + 10;
 
         // Aclaration text
+        let aclarationText = "";
 
         if(this.evaluatedPostInfo.selectedFallacyObj) {
-            const aclarationText = this.scene.add.text(
-                10, 
-                contentHeight,
-                `Has seleccionado la falacia: ${this.evaluatedPostInfo.selectedFallacyObj.name}`,
-                TEXT_CONFIG.Paragraph
-            )
-            .setTint(PALETTE_RGBA.DarkerGrey)
-            .setOrigin(0, 0)
-            .setWordWrapWidth(width - 20);
-            
-            this.add(aclarationText);
-
-            contentHeight += aclarationText.getBounds().height + 10;
+            aclarationText += 
+                `Has seleccionado la falacia: ${this.evaluatedPostInfo.selectedFallacyObj.name}.
+                ${this.evaluatedPostInfo.selectedFallacyObj.long_desc}`;
         }
+        else {
+            aclarationText += "No lo has asociado a ninguna falacia.";
+        }
+
+        if(this.evaluatedPostInfo.postObjectDef.fallacyType !== "NONE") {
+            aclarationText += `\nLa falacia correcta era: ${this.evaluatedPostInfo.postObjectDef.fallacyType}.`;
+        }
+        else {
+            aclarationText += `\nEl post no contenía ninguna falacia.`;
+        }
+
+        const aclarationTextBox = this.scene.add.text(
+            10, contentHeight,
+            aclarationText,
+            TEXT_CONFIG.Paragraph
+        )
+        .setTint(PALETTE_RGBA.DarkerGrey)
+        .setOrigin(0, 0)
+        .setWordWrapWidth(width - 20);
+        
+        this.add(aclarationTextBox);
+
+        contentHeight += aclarationTextBox.getBounds().height + 10;
 
         this._mainRectangle.setSize(this._mainRectangle.width, contentHeight);
         this._shadowRectangle.setSize(this._mainRectangle.width, contentHeight);
