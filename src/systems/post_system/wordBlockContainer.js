@@ -245,8 +245,6 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
      * @param {number} sentenceID 
      */
     selectSentence(sentenceID) {
-        if(this._selectedSentencesIds.has(sentenceID))
-            return;
 
         this.wordList.forEach((wordBlock) => {
             wordBlock.setSelectionState(wordBlock.sentenceID == sentenceID);

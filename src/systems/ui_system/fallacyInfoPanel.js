@@ -21,6 +21,12 @@ export class FallacyInfoPanel extends Phaser.GameObjects.Container {
     infoBoxes = new Array();
 
     /**
+     * The currently selected InfoBox.
+     * @type {InfoBox}
+     */
+    selectedInfoBox = null;
+
+    /**
      * @type {function(InfoBox)}
      */
     onInfoBoxClicked = function(infoBox) {};
@@ -68,6 +74,25 @@ export class FallacyInfoPanel extends Phaser.GameObjects.Container {
         // Add click event listener to the info box
         infoBox.on(Phaser.Input.Events.POINTER_DOWN, () => {
             this.onInfoBoxClicked(infoBox);
+        });
+    }
+
+    setInfoBoxSelected(infoBox, selected) {
+        infoBox.setSelectionState(selected);
+
+        if(selected) {
+            this.selectedInfoBox = infoBox;
+            return;
+        }
+
+        if(this.selectedInfoBox === infoBox) {
+            this.selectedInfoBox = null;
+        }
+    }
+
+    clearBoxesSeleciton() {
+        this.infoBoxes.forEach((infoBox) => {
+            this.setInfoBoxSelected(infoBox, false);
         });
     }
 }

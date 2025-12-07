@@ -94,12 +94,13 @@ export class InspectorManager {
         }
 
         // Deselect all info boxes
-        this.infoPanel.infoBoxes.forEach((infoBox) => {
+       /* this.infoPanel.infoBoxes.forEach((infoBox) => {
             infoBox.setSelectionState(false);
         });
 
         // Select clicked info box
-        infoBox.setSelectionState(!infoBox.isSelected);
+        infoBox.setSelectionState(!infoBox.isSelected);*/
+        this.infoPanel.setInfoBoxSelected(infoBox, !infoBox.isSelected);
     }
 
     /**
@@ -111,6 +112,7 @@ export class InspectorManager {
         if (!this.inspectionActive) return;
         if(!(clickedObject instanceof WordBlock)) return;
 
+        this.postManager.currentPostObject.wordBlockContainer.deselectAllWordBlocks();
         this.postManager.currentPostObject.wordBlockContainer.selectSentence(clickedObject.sentenceID);
     }
 
@@ -123,9 +125,10 @@ export class InspectorManager {
             this.inspectorModeButton.setTint(PALETTE_HEX.White);
 
         // Deselect all info boxes
-        this.infoPanel.infoBoxes.forEach((infoBox) => {
+        /*this.infoPanel.infoBoxes.forEach((infoBox) => {
             infoBox.setSelectionState(false);
-        });
+        });*/
+        this.infoPanel.clearBoxesSeleciton();
 
         this.postManager.currentPostObject.wordBlockContainer.deselectAllWordBlocks();
     }

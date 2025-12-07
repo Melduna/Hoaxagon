@@ -3,6 +3,7 @@ import { PostBoxObject } from "./postBoxObject.js";
 import { TEXT_CONFIG } from "../../utils/textConfigs.js";
 import { PALETTE_RGBA } from "../../utils/Palette.js";
 import { EvaluatedPostInfo } from "./evaluatedPostInfo.js";
+import { InfoBox } from "../../utils/infoBox.js";
 
 export const FALLACY_TYPE = {
     ALL: "ALL",
@@ -61,7 +62,7 @@ export class PostManager {
     /**
      * @type {Array<EvaluatedPostInfo>}
      */
-    evaluatedPostsInfo;
+    evaluatedPostsInfo = new Array();
 
     /**
      * @type {PostBoxObject}
@@ -297,6 +298,11 @@ export class PostManager {
         this.postUserInfo.setText("Usuario: " + this.currentPostDefinition.user);
     }
 
+    /**
+     * Registers a new `EvaluatedPostInfo` in the manager list of evaluated posts.
+     * @param {boolean} playerSuccessed 
+     * @param {InfoBox} selectedFallacyObj 
+     */
     savePostEvaluation(playerSuccessed, selectedFallacyObj) {
         let selectedSentenceID = -1;
 
@@ -304,7 +310,8 @@ export class PostManager {
         if(this.currentPostObject.wordBlockContainer.getSelectedSentenceIDs().length > 0)
             selectedSentenceID = this.currentPostObject.wordBlockContainer.getSelectedSentenceIDs()[0]; // We can ensure there is only one selected
 
-        evaluatedPostsInfo.push(new EvaluatedPostInfo(this.currentPostDefinition, playerSuccessed, selectedSentenceID, selectedFallacyObj));
+        this.evaluatedPostsInfo.push(new EvaluatedPostInfo(this.currentPostDefinition, playerSuccessed, selectedSentenceID, selectedFallacyObj));
+        console.log(this.evaluatedPostsInfo);
     }
 
     /**

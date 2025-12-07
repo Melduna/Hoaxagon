@@ -293,6 +293,9 @@ export default class GameScene extends Phaser.Scene{
 
         if (this.arcade && this.levelThresholds[this.level] != -1 && this.scoreManager.getScore()>=this.levelThresholds[this.level]) 
             this.levelUp();
+
+        const selectedFallacyObj =  this.infoPanel.selectedInfoBox ? this.infoPanel.selectedInfoBox.fallacyObj : null; // Null if none selected
+        this.postManager.savePostEvaluation(true, selectedFallacyObj);
             
         this.postManager.loadNextPostInUI(POST_VEREDICT.SUCCESSFUL);
 
@@ -309,6 +312,9 @@ export default class GameScene extends Phaser.Scene{
         this.scoreManager.resetStreak();
 
         this.timerManager.addTimeSeconds(-30);
+
+        const selectedFallacyObj =  this.infoPanel.selectedInfoBox ? this.infoPanel.selectedInfoBox.fallacyObj : null; // Null if none selected
+        this.postManager.savePostEvaluation(false, selectedFallacyObj);
             
         this.postManager.loadNextPostInUI(POST_VEREDICT.FAILURE);
 

@@ -3,7 +3,7 @@ export class EvaluatedPostInfo {
     /**
      * @type {Post}
      */
-    postObject;
+    postObjectDef;
 
     /**
      * @type {boolean}
@@ -22,20 +22,28 @@ export class EvaluatedPostInfo {
      */
     selectedFallacyObj = null;
 
-    constructor(postObject, playerSuccessed, sentenceSelectedID, selectedFallacyObj) {
+    constructor(postObjectDef, playerSuccessed, sentenceSelectedID, selectedFallacyObjDef) {
 
-        console.assert(postObject !== null, "EvaluatedPostInfo: postObject is null");
+        console.assert(postObjectDef !== null, "EvaluatedPostInfo: postObject is null");
         console.assert(
-            Object.hasOwn(postObject, "text") && 
-            Object.hasOwn(postObject, "fallacyType"), 
-            "EvaluatedPostInfo: postObject is not a Post");
+            Object.hasOwn(postObjectDef, "text") && 
+            Object.hasOwn(postObjectDef, "fallacyType"), 
+            "EvaluatedPostInfo: postObject is not a Post"
+        );
+
         console.assert(typeof playerSuccessed === "boolean", "EvaluatedPostInfo: playerSuccessed is not a boolean");
         console.assert(typeof sentenceSelectedID === "number", "EvaluatedPostInfo: sentenceSelectedID is not a number");
-        // selectedFallacyObj can be null
 
-        this.postObject = postObject;
+        console.assert(
+            selectedFallacyObjDef === null ||
+            Object.hasOwn(selectedFallacyObjDef, "name") &&
+            Object.hasOwn(selectedFallacyObjDef, "description"),
+            "EvaluatedPostInfo: selectedFallacyObj is not a Fallacy"
+        );
+
+        this.postObjectDef = postObjectDef;
         this.playerSuccessed = playerSuccessed;
         this.sentenceSelectedID = sentenceSelectedID;
-        this.selectedFallacyObj = selectedFallacyObj;
+        this.selectedFallacyObj = selectedFallacyObjDef;
     }
 }
