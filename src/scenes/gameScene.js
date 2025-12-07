@@ -220,8 +220,15 @@ export default class GameScene extends Phaser.Scene{
         this.timerManager.update(time, dt);
         this.scoreManager.update(time, dt);
 
-        if(this.timerManager.enabled && this.timerManager.timer === 0)
-            this.scene.start(SCENE_KEYS.PUNCTUATION_SCENE, {punctuation: this.scoreManager.points});
+        if(this.timerManager.enabled && this.timerManager.timer === 0){
+            this.scene.start(
+                SCENE_KEYS.PUNCTUATION_SCENE, 
+                {
+                    punctuation: this.scoreManager.points,
+                    postManager: this.postManager
+                }
+            );
+        }
         //#endregion
 
         //#region input

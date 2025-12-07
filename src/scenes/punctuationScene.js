@@ -1,6 +1,8 @@
 import { ScoreManager } from "../systems/score_system/scoreManager.js";
 import { IMAGE_KEYS, SCENE_KEYS } from "../utils/CommonKeys.js";
 import { PALETTE_HEX, PALETTE_RGBA } from "../utils/Palette.js";
+import { CorrectionFeedbackBox } from "../systems/ui_system/correctionFeedbackBox.js";
+import { PostManager } from "../systems/post_system/postManager.js";
 
 export default class PunctuationScene extends Phaser.Scene {
 
@@ -13,6 +15,11 @@ export default class PunctuationScene extends Phaser.Scene {
      * @type {ScoreManager}
      */
     scoreManager;
+
+    /**
+     * @type {PostManager}
+     */
+    postManager;
 
     /**
      * Whether the score has been fully displayed or not.
@@ -63,6 +70,7 @@ export default class PunctuationScene extends Phaser.Scene {
      * @param {
      *     {
      *         punctuation: number
+     *         postManager: PostManager
      *     }
      * } data 
      */
@@ -92,7 +100,22 @@ export default class PunctuationScene extends Phaser.Scene {
                 this.scene.start(SCENE_KEYS.MAIN_MENU_SCENE);
         });
 
-        
+        this.postManager = data.postManager;
+
+        let lastElementHeigjht = 0;
+        this.postManager.evaluatedPostsInfo.forEach((evaluatedPostInfo, index) => {
+            const feedbackBox = new CorrectionFeedbackBox(
+                this,
+                SCREEN_WIDTH * 0.1,
+                lastElementHeigjht,
+                SCREEN_WIDTH * 0.4,
+                140,
+                evaluatedPostInfo
+            );
+            this.add.existing(feedbackBox);
+
+            lastElementHeigjht += feedbackBox.getBounds().height + 10;
+        });
     }
 
     update(time, dt) {
