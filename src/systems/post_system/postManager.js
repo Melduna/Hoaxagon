@@ -2,6 +2,7 @@ import { JSON_KEYS } from "../../utils/CommonKeys.js";
 import { PostBoxObject } from "./postBoxObject.js";
 import { TEXT_CONFIG } from "../../utils/textConfigs.js";
 import { PALETTE_RGBA } from "../../utils/Palette.js";
+import { EvaluatedPostInfo } from "./evaluatedPostInfo.js";
 
 export const FALLACY_TYPE = {
     ALL: "ALL",
@@ -56,6 +57,11 @@ export class PostManager {
      * @type {Phaser.GameObjects.Image}
      */
     userPicture;
+
+    /**
+     * @type {Array<EvaluatedPostInfo>}
+     */
+    evaluatedPostsInfo;
 
     /**
      * @type {PostBoxObject}
@@ -289,6 +295,16 @@ export class PostManager {
         });
 
         this.postUserInfo.setText("Usuario: " + this.currentPostDefinition.user);
+    }
+
+    savePostEvaluation(playerSuccessed, selectedFallacyObj) {
+        let selectedSentenceID = -1;
+
+        // We check if the player has justified his veredict by selecting a sentence
+        if(this.currentPostObject.wordBlockContainer.getSelectedSentenceIDs().length > 0)
+            selectedSentenceID = this.currentPostObject.wordBlockContainer.getSelectedSentenceIDs()[0]; // We can ensure there is only one selected
+
+        evaluatedPostsInfo.push(new EvaluatedPostInfo(this.currentPostDefinition, playerSuccessed, selectedSentenceID, selectedFallacyObj));
     }
 
     /**

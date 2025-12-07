@@ -60,6 +60,12 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
     _currentLineWidth = 0;
 
     /**
+     * The list of the sentenceIDs that are currently selected.
+     * @type {Array<number>}
+     */
+    _selectedSentencesIds = new Array();
+
+    /**
      * 
      * @param {Phaser.Scene} scene 
      * @param {number} positionX 
@@ -239,9 +245,14 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
      * @param {number} sentenceID 
      */
     selectSentence(sentenceID) {
+        if(this._selectedSentencesIds.has(sentenceID))
+            return;
+
         this.wordList.forEach((wordBlock) => {
             wordBlock.setSelectionState(wordBlock.sentenceID == sentenceID);
         });
+        
+        this._selectedSentencesIds.push(sentenceID);
     }
 
     /**
@@ -251,5 +262,15 @@ export class WordBlockContainer extends Phaser.GameObjects.Container {
         this.wordList.forEach((wordBlock) => {
             wordBlock.setSelectionState(false);
         });
+
+        this._selectedSentencesIds = [];
+    }
+
+    /**
+     * Returns the list of currently selected sentenceIDs.
+     * @returns {Array<number>}
+     */
+    getSelectedSentenceIDs() {
+        return this._selectedSentencesIds;
     }
 }

@@ -156,7 +156,7 @@ export default class GameScene extends Phaser.Scene{
         this.acceptButton.setInteractive();
         this.acceptButton.on(Phaser.Input.Events.POINTER_DOWN, () => {
 
-            if(this.inspectorManager.inspectionActive) return;
+            //if(this.inspectorManager.inspectionActive) return;
 
             if (this.postManager.currentPostDefinition.fallacyType === "NONE") {
                 this.success();
@@ -169,7 +169,7 @@ export default class GameScene extends Phaser.Scene{
         this.declineButton.setInteractive();
         this.declineButton.on(Phaser.Input.Events.POINTER_DOWN, () => {
 
-            if(this.inspectorManager.inspectionActive) return;
+            // if(this.inspectorManager.inspectionActive) return;
 
             if (this.postManager.currentPostDefinition.fallacyType !== "NONE") {
                 this.success();
@@ -297,6 +297,8 @@ export default class GameScene extends Phaser.Scene{
         this.postManager.loadNextPostInUI(POST_VEREDICT.SUCCESSFUL);
 
         console.log("GOOD CHOICE");
+        if(this.inspectorManager.inspectionActive)
+            this.inspectorManager.handleInspectorButtonClick();
     }
 
     /**
@@ -311,6 +313,8 @@ export default class GameScene extends Phaser.Scene{
         this.postManager.loadNextPostInUI(POST_VEREDICT.FAILURE);
 
         console.log("BAD CHOICE");
+        if(this.inspectorManager.inspectionActive)
+            this.inspectorManager.handleInspectorButtonClick();
     }
 
     /**
