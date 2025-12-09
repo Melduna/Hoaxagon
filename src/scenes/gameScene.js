@@ -292,6 +292,18 @@ export default class GameScene extends Phaser.Scene{
     success(postAccepted) {
         console.assert(typeof postAccepted === "boolean", "GameScene.success: postAccepted is not a boolean");
 
+        const selectedFallacyObj =  this.infoPanel.selectedInfoBox ? this.infoPanel.selectedInfoBox.fallacyObj : null; // Null if none selected
+        this.postManager.savePostEvaluation(postAccepted, true, selectedFallacyObj);
+
+        let identified = selectedFallacyObj &&
+            this.postManager.currentPostDefinition.fallaciousSentenceID == this.postManager.currentPostObject.wordBlockContainer.getSelectedSentenceIDs()[0] &&
+            selectedFallacyObj.name == this.postManager.currentPostDefinition.fallacyType;
+        console.log(identified); 
+        if (identified){ 
+                
+                this.scoreManager.addPoints(50);
+            }
+
         if (this.scoreManager.boost) {
             this.scoreManager.addPoints(200);
             this.scoreManager.setBoost(false);
@@ -303,11 +315,7 @@ export default class GameScene extends Phaser.Scene{
         this.scoreManager.streakUp();
 
         if (this.arcade && this.levelThresholds[this.level] != -1 && this.scoreManager.getScore()>=this.levelThresholds[this.level]) 
-            this.levelUp();
-
-        const selectedFallacyObj =  this.infoPanel.selectedInfoBox ? this.infoPanel.selectedInfoBox.fallacyObj : null; // Null if none selected
-        this.postManager.savePostEvaluation(postAccepted, true, selectedFallacyObj);
-            
+            this.levelUp(); 
         this.postManager.loadNextPostInUI(POST_VEREDICT.SUCCESSFUL);
 
         console.log("GOOD CHOICE");
