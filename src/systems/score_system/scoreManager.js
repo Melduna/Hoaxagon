@@ -153,10 +153,11 @@ export class ScoreManager {
     /**
      * Adds the specified amount to the game's score.
      * @param {number} points
+     * @param {boolean} hide
      */
-    addPoints(points) {
+    addPoints(points, hide) {
         this.points += points;
-        this.scoreLog.addNewMessage(MESSAGE_TYPE.POINTS,points);
+        if (!hide) this.scoreLog.addNewMessage(MESSAGE_TYPE.POINTS,points);
         this.updateScore();
     }
 

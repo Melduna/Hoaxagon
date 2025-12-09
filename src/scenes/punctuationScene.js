@@ -109,7 +109,7 @@ export default class PunctuationScene extends Phaser.Scene {
 
         if(this.countDown <= 0 && !this.fullScoreShown) {
             this.countDown = this.timeBetweenScoreUpdates;
-            this.scoreManager.addPoints(1);
+            this.scoreManager.addPoints(this.punctuation/50,true);
         }
 
         if(this.scoreManager.points === this.punctuation)
